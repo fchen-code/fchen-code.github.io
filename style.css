@@ -1,12 +1,242 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f2eb;
+  color: #111111;
+}
+
+/* Top bar */
+.topbar {
+  width: 100%;
+  padding: 28px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd6cb;
+  background-color: #f5f2eb;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.brand h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.brand p {
+  margin: 0;
+  color: #555;
+  font-size: 15px;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #f0b63f;
+  display: inline-block;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #111;
+  font-size: 15px;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+/* Hero section */
+.hero {
+  max-width: 1250px;
+  margin: 0 auto;
+  min-height: calc(100vh - 90px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+  padding: 60px 50px;
+}
+
+.hero-image,
+.hero-text {
+  flex: 1;
+}
+
+.hero-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Placeholder for now */
 .photo-placeholder {
   width: 420px;
   height: 420px;
   border-radius: 50%;
-  background-color: #e5e7eb;
+  background: linear-gradient(135deg, #ece6dc, #ddd4c7);
+  border: 2px dashed #b8aea1;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #6b6258;
   font-size: 20px;
-  color: #666;
-  border: 2px dashed #ccc;
+  text-transform: lowercase;
+}
+
+/* Use this later for real image
+.hero-image img {
+  width: 420px;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+*/
+
+.eyebrow {
+  margin: 0 0 16px 0;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #7a746d;
+}
+
+.hero-text h1 {
+  margin: 0;
+  font-size: 96px;
+  line-height: 0.95;
+  font-weight: 700;
+}
+
+.hero-text h3 {
+  margin: 18px 0 22px 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.hero-text p {
+  max-width: 540px;
+  font-size: 18px;
+  line-height: 1.75;
+  color: #2f2f2f;
+  margin-bottom: 18px;
+}
+
+.circle-links {
+  display: flex;
+  gap: 24px;
+  margin-top: 34px;
+  flex-wrap: wrap;
+}
+
+.circle {
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
+  text-decoration: none;
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 18px;
+  font-size: 22px;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.circle:hover {
+  transform: translateY(-4px);
+}
+
+.about {
+  background-color: #f1b83d;
+}
+
+.projects {
+  background-color: #ef6f5b;
+}
+
+.tools {
+  background-color: #8ad7da;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 42px;
+  }
+
+  .hero-text p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .circle-links {
+    justify-content: center;
+  }
+
+  .hero-text h1 {
+    font-size: 72px;
+  }
+}
+
+@media (max-width: 700px) {
+  .topbar {
+    padding: 22px 24px;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .nav {
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero {
+    padding: 36px 22px 48px;
+  }
+
+  .photo-placeholder {
+    width: 280px;
+    height: 280px;
+    font-size: 16px;
+  }
+
+  .hero-text h1 {
+    font-size: 56px;
+  }
+
+  .hero-text h3 {
+    font-size: 20px;
+  }
+
+  .hero-text p {
+    font-size: 16px;
+  }
+
+  .circle {
+    width: 115px;
+    height: 115px;
+    font-size: 18px;
+  }
 }
