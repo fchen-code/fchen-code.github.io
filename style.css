@@ -17,7 +17,7 @@ body {
 /* soft layer so text is easier to read */
 .page-overlay {
   min-height: 100vh;
-  background: rgba(245, 242, 235, 0.72);
+  background: rgba(245, 242, 235, 0.50);
 }
 
 /* Top bar */
