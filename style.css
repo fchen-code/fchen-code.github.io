@@ -5,8 +5,19 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #f5f2eb;
   color: #111111;
+  background-image: url("images/bio-cs-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* soft layer so text is easier to read */
+.page-overlay {
+  min-height: 100vh;
+  background: rgba(245, 242, 235, 0.72);
 }
 
 /* Top bar */
@@ -16,8 +27,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ddd6cb;
-  background-color: #f5f2eb;
+  border-bottom: 1px solid rgba(221, 214, 203, 0.8);
+  background-color: rgba(245, 242, 235, 0.55);
+  backdrop-filter: blur(4px);
 }
 
 .brand {
@@ -85,22 +97,23 @@ body {
   align-items: center;
 }
 
-/* Placeholder for now */
 .photo-placeholder {
   width: 420px;
   height: 420px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ece6dc, #ddd4c7);
-  border: 2px dashed #b8aea1;
+  background: rgba(255, 255, 255, 0.45);
+  border: 2px dashed rgba(120, 120, 120, 0.45);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6b6258;
+  color: #5e5e5e;
   font-size: 20px;
   text-transform: lowercase;
 }
 
-/* Use this later for real image
+/* use this later when you add your real photo */
+/*
 .hero-image img {
   width: 420px;
   height: 420px;
@@ -114,7 +127,7 @@ body {
   margin: 0 0 16px 0;
   font-size: 12px;
   letter-spacing: 2px;
-  color: #7a746d;
+  color: #6f6a64;
 }
 
 .hero-text h1 {
@@ -158,11 +171,12 @@ body {
   padding: 18px;
   font-size: 22px;
   font-weight: 700;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .circle:hover {
   transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
 }
 
 .about {
