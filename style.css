@@ -254,3 +254,43 @@ body {
     font-size: 18px;
   }
 }
+
+.subpage {
+  max-width: 1000px;
+  margin: 0 auto;
+  min-height: calc(100vh - 90px);
+  display: flex;
+  align-items: center;
+  padding: 60px 40px;
+}
+
+.subpage-content {
+  max-width: 700px;
+}
+
+.subpage-content h1 {
+  font-size: 72px;
+  margin: 0 0 20px 0;
+  line-height: 1;
+}
+
+.subpage-content p {
+  font-size: 20px;
+  line-height: 1.8;
+  color: #2f2f2f;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 700px) {
+  .subpage {
+    padding: 36px 22px 48px;
+  }
+
+  .subpage-content h1 {
+    font-size: 48px;
+  }
+
+  .subpage-content p {
+    font-size: 17px;
+  }
+}
