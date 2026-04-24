@@ -346,7 +346,7 @@ body {
 
 .social-icons a {
   font-size: 22px;
-  color: Gray;
+  color: #111;
   text-decoration: none;
   transition: transform 0.2s ease, color 0.2s ease;
 }
