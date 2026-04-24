@@ -14,7 +14,7 @@ body {
   min-height: 100vh;
 }
 
-/* soft layer so text is easier to read */
+/* overlay */
 .page-overlay {
   min-height: 100vh;
   background: rgba(245, 242, 235, 0.50);
@@ -56,7 +56,6 @@ body {
   height: 14px;
   border-radius: 50%;
   background-color: #f0b63f;
-  display: inline-block;
 }
 
 .nav {
@@ -74,7 +73,7 @@ body {
   text-decoration: underline;
 }
 
-/* Hero section */
+/* HERO */
 .hero {
   max-width: 1250px;
   margin: 0 auto;
@@ -109,38 +108,24 @@ body {
   justify-content: center;
   color: #5e5e5e;
   font-size: 20px;
-  text-transform: lowercase;
 }
 
-/* use this later when you add your real photo */
-/*
-.hero-image img {
-  width: 420px;
-  height: 420px;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-}
-*/
-
+/* text */
 .eyebrow {
-  margin: 0 0 16px 0;
   font-size: 12px;
   letter-spacing: 2px;
   color: #6f6a64;
+  margin-bottom: 16px;
 }
 
 .hero-text h1 {
-  margin: 0;
   font-size: 96px;
-  line-height: 0.95;
-  font-weight: 700;
+  margin: 0;
 }
 
 .hero-text h3 {
-  margin: 18px 0 22px 0;
   font-size: 24px;
-  font-weight: 600;
+  margin: 18px 0;
 }
 
 .hero-text p {
@@ -148,77 +133,37 @@ body {
   font-size: 18px;
   line-height: 1.75;
   color: #2f2f2f;
-  margin-bottom: 18px;
 }
 
+/* circles */
 .circle-links {
   display: flex;
   gap: 24px;
   margin-top: 34px;
-  flex-wrap: wrap;
 }
 
 .circle {
   width: 145px;
   height: 145px;
   border-radius: 50%;
-  text-decoration: none;
-  color: #111;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 18px;
-  font-size: 22px;
-  font-weight: 700;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-weight: bold;
+  text-decoration: none;
+  color: #111;
+  transition: 0.2s;
 }
 
 .circle:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
 }
 
-.about {
-  background-color: #f1b83d;
-}
+.about { background: #f1b83d; }
+.projects { background: #ef6f5b; }
+.tools { background: #8ad7da; }
 
-.projects {
-  background-color: #ef6f5b;
-}
-
-.tools {
-  background-color: #8ad7da;
-}
-
-/* Subpage */
-.subpage {
-  max-width: 1000px;
-  margin: 0 auto;
-  min-height: calc(100vh - 90px);
-  display: flex;
-  align-items: center;
-  padding: 60px 40px;
-}
-
-.subpage-content {
-  max-width: 700px;
-}
-
-.subpage-content h1 {
-  font-size: 72px;
-  margin: 0 0 20px 0;
-  line-height: 1;
-}
-
-.subpage-content p {
-  font-size: 20px;
-  line-height: 1.8;
-  color: #2f2f2f;
-  margin-bottom: 20px;
-}
-
-/* About page layout */
+/* ABOUT PAGE */
 .about-layout {
   max-width: 1200px;
   margin: 0 auto;
@@ -233,16 +178,14 @@ body {
 
 .skills {
   flex: 1;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255,255,255,0.6);
   padding: 24px;
   border-radius: 16px;
   backdrop-filter: blur(6px);
-  height: fit-content;
 }
 
 .skills h3 {
   margin-top: 0;
-  font-size: 20px;
 }
 
 .skill-group {
@@ -251,108 +194,87 @@ body {
 
 .skill-title {
   font-weight: bold;
-  margin-bottom: 6px;
   font-size: 14px;
   color: #555;
 }
 
-/* Responsive */
+/* SOCIAL ICONS (bottom right) */
+.social-icons {
+  position: fixed;
+  bottom: 25px;
+  right: 30px;
+
+  display: flex;
+  gap: 18px;
+  z-index: 1000;
+}
+
+.social-icons a {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  color: #6b7280;
+
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.social-icons a:hover {
+  color: #111;
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.7);
+}
+
+/* RESPONSIVE */
 @media (max-width: 1000px) {
   .hero {
     flex-direction: column;
     text-align: center;
-    gap: 42px;
-  }
-
-  .hero-text p {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .circle-links {
-    justify-content: center;
-  }
-
-  .hero-text h1 {
-    font-size: 72px;
   }
 
   .about-layout {
     flex-direction: column;
   }
+
+  .hero-text h1 {
+    font-size: 72px;
+  }
 }
 
 @media (max-width: 700px) {
   .topbar {
-    padding: 22px 24px;
     flex-direction: column;
-    gap: 14px;
-  }
-
-  .nav {
-    gap: 18px;
-    flex-wrap: wrap;
-    justify-content: center;
+    padding: 20px;
   }
 
   .hero {
-    padding: 36px 22px 48px;
+    padding: 30px;
   }
 
   .photo-placeholder {
     width: 280px;
     height: 280px;
-    font-size: 16px;
   }
 
   .hero-text h1 {
     font-size: 56px;
   }
 
-  .hero-text h3 {
-    font-size: 20px;
-  }
-
-  .hero-text p {
-    font-size: 16px;
-  }
-
   .circle {
     width: 115px;
     height: 115px;
-    font-size: 18px;
-  }
-
-  .subpage {
-    padding: 36px 22px 48px;
-  }
-
-  .subpage-content h1 {
-    font-size: 48px;
-  }
-
-  .subpage-content p {
-    font-size: 17px;
   }
 
   .about-layout {
-    padding: 36px 22px 48px;
+    padding: 30px;
   }
-  .social-icons {
-  margin-top: 20px;
-  display: flex;
-  gap: 20px;
-}
-
-.social-icons a {
-  font-size: 22px;
-  color: #111;
-  text-decoration: none;
-  transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.social-icons a:hover {
-  transform: translateY(-3px);
-  color: #555;
-}
 }
