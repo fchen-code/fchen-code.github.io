@@ -14,10 +14,9 @@ body {
   min-height: 100vh;
 }
 
-/* overlay */
 .page-overlay {
   min-height: 100vh;
-  background: rgba(245, 242, 235, 0.50);
+  background: rgba(245, 242, 235, 0.42);
 }
 
 /* Top bar */
@@ -27,9 +26,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(221, 214, 203, 0.8);
-  background-color: rgba(245, 242, 235, 0.55);
-  backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(221, 214, 203, 0.75);
+  background-color: rgba(245, 242, 235, 0.65);
+  backdrop-filter: blur(5px);
 }
 
 .brand {
@@ -41,14 +40,14 @@ body {
 
 .brand h2 {
   margin: 0;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
 }
 
 .brand p {
   margin: 0;
   color: #555;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .dot {
@@ -60,20 +59,20 @@ body {
 
 .nav {
   display: flex;
-  gap: 28px;
+  gap: 34px;
 }
 
 .nav a {
   text-decoration: none;
   color: #111;
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .nav a:hover {
   text-decoration: underline;
 }
 
-/* HERO */
+/* Home page */
 .hero {
   max-width: 1250px;
   margin: 0 auto;
@@ -110,12 +109,12 @@ body {
   font-size: 20px;
 }
 
-/* text */
 .eyebrow {
-  font-size: 12px;
-  letter-spacing: 2px;
+  font-size: 17px;
+  letter-spacing: 4px;
   color: #6f6a64;
-  margin-bottom: 16px;
+  margin: 0 0 22px 0;
+  font-weight: 700;
 }
 
 .hero-text h1 {
@@ -135,7 +134,7 @@ body {
   color: #2f2f2f;
 }
 
-/* circles */
+/* Home circles */
 .circle-links {
   display: flex;
   gap: 24px;
@@ -163,67 +162,114 @@ body {
 .projects { background: #ef6f5b; }
 .tools { background: #8ad7da; }
 
-/* ABOUT PAGE */
+/* About page */
 .about-layout {
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
-  display: flex;
-  gap: 60px;
-  padding: 60px 40px;
+  min-height: calc(100vh - 90px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+  padding: 70px 72px 120px;
+}
+
+.about-card {
+  background: rgba(255, 255, 255, 0.68);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.06);
 }
 
 .about-text {
-  flex: 2;
+  padding: 34px 40px;
+}
+
+.about-text h1 {
+  font-size: 66px;
+  line-height: 1;
+  margin: 0 0 30px 0;
+  font-weight: 800;
+}
+
+.about-text p {
+  font-size: 22px;
+  line-height: 1.55;
+  color: #111;
+  margin: 0 0 26px 0;
 }
 
 .skills {
-  flex: 1;
-  background: rgba(255,255,255,0.6);
-  padding: 24px;
-  border-radius: 16px;
-  backdrop-filter: blur(6px);
+  padding: 42px 52px;
 }
 
-.skills h3 {
-  margin-top: 0;
+.skills h2 {
+  margin: 0 0 28px 0;
+  font-size: 42px;
+  line-height: 1;
 }
 
-.skill-group {
-  margin-bottom: 18px;
+.skill-row {
+  display: grid;
+  grid-template-columns: 105px 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.13);
 }
 
-.skill-title {
-  font-weight: bold;
-  font-size: 14px;
-  color: #555;
+.skill-row:last-child {
+  border-bottom: none;
 }
 
-/* SOCIAL ICONS (bottom right) */
+.skill-icon {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: rgba(190, 220, 222, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-icon i {
+  font-size: 45px;
+  color: #5b9298;
+}
+
+.skill-info h3 {
+  margin: 0 0 12px 0;
+  font-size: 27px;
+  line-height: 1.1;
+}
+
+.skill-info p {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.4;
+}
+
+/* Social icons bottom right */
 .social-icons {
   position: fixed;
   bottom: 25px;
   right: 30px;
-
   display: flex;
-  gap: 18px;
+  gap: 20px;
   z-index: 1000;
 }
 
 .social-icons a {
-  width: 45px;
-  height: 45px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
-
-  background: rgba(255,255,255,0.5);
-  backdrop-filter: blur(6px);
-
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(7px);
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 20px;
+  font-size: 28px;
   color: #6b7280;
-
   text-decoration: none;
   transition: 0.2s;
 }
@@ -231,22 +277,26 @@ body {
 .social-icons a:hover {
   color: #111;
   transform: translateY(-4px);
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.9);
 }
 
-/* RESPONSIVE */
-@media (max-width: 1000px) {
-  .hero {
-    flex-direction: column;
-    text-align: center;
-  }
-
+/* Responsive */
+@media (max-width: 1100px) {
   .about-layout {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    padding: 50px 32px 120px;
   }
 
-  .hero-text h1 {
-    font-size: 72px;
+  .about-text h1 {
+    font-size: 54px;
+  }
+
+  .about-text p {
+    font-size: 19px;
+  }
+
+  .skill-info p {
+    font-size: 19px;
   }
 }
 
@@ -254,10 +304,19 @@ body {
   .topbar {
     flex-direction: column;
     padding: 20px;
+    gap: 14px;
+  }
+
+  .nav {
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .hero {
     padding: 30px;
+    flex-direction: column;
+    text-align: center;
   }
 
   .photo-placeholder {
@@ -275,6 +334,51 @@ body {
   }
 
   .about-layout {
-    padding: 30px;
+    padding: 30px 18px 110px;
+  }
+
+  .about-text,
+  .skills {
+    padding: 28px 24px;
+  }
+
+  .about-text h1 {
+    font-size: 44px;
+  }
+
+  .about-text p {
+    font-size: 17px;
+  }
+
+  .skills h2 {
+    font-size: 34px;
+  }
+
+  .skill-row {
+    grid-template-columns: 72px 1fr;
+    gap: 18px;
+  }
+
+  .skill-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .skill-icon i {
+    font-size: 30px;
+  }
+
+  .skill-info h3 {
+    font-size: 22px;
+  }
+
+  .skill-info p {
+    font-size: 17px;
+  }
+
+  .social-icons a {
+    width: 48px;
+    height: 48px;
+    font-size: 23px;
   }
 }
