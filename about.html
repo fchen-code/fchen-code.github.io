@@ -25,7 +25,7 @@
     </header>
 
     <main class="about-layout">
-      <section class="about-text">
+      <section class="about-card about-text">
         <p class="eyebrow">ABOUT ME</p>
         <h1>Hi, I’m Feng</h1>
 
@@ -51,41 +51,61 @@
         </p>
       </section>
 
-      <aside class="skills">
-        <h3>Skills</h3>
+      <aside class="about-card skills">
+        <h2>Skills</h2>
 
-        <div class="skill-group">
-          <p class="skill-title">Languages</p>
-          <p>Python · R · SQL · Bash</p>
+        <div class="skill-row">
+          <div class="skill-icon">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <div class="skill-info">
+            <h3>Languages</h3>
+            <p>Python · R · SQL · Bash</p>
+          </div>
         </div>
 
-        <div class="skill-group">
-          <p class="skill-title">Tools</p>
-          <p>Nextflow · Git · Linux · Docker</p>
+        <div class="skill-row">
+          <div class="skill-icon">
+            <i class="fa-solid fa-wrench"></i>
+          </div>
+          <div class="skill-info">
+            <h3>Tools</h3>
+            <p>Nextflow · Git · Linux · Docker</p>
+          </div>
         </div>
 
-        <div class="skill-group">
-          <p class="skill-title">Bioinformatics</p>
-          <p>RNA-seq · ATAC-seq · NGS analysis</p>
+        <div class="skill-row">
+          <div class="skill-icon">
+            <i class="fa-solid fa-dna"></i>
+          </div>
+          <div class="skill-info">
+            <h3>Bioinformatics</h3>
+            <p>RNA-seq · ATAC-seq · NGS analysis</p>
+          </div>
         </div>
 
-        <div class="skill-group">
-          <p class="skill-title">Currently Learning</p>
-          <p>AWS · Deep Learning</p>
+        <div class="skill-row">
+          <div class="skill-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div class="skill-info">
+            <h3>Currently Learning</h3>
+            <p>AWS · Deep Learning</p>
+          </div>
         </div>
       </aside>
     </main>
 
     <div class="social-icons">
-      <a href="https://github.com/YOUR-USERNAME" target="_blank">
+      <a href="https://github.com/YOUR-USERNAME" target="_blank" aria-label="GitHub">
         <i class="fab fa-github"></i>
       </a>
 
-      <a href="https://www.linkedin.com/in/YOUR-LINK" target="_blank">
+      <a href="https://www.linkedin.com/in/YOUR-LINK" target="_blank" aria-label="LinkedIn">
         <i class="fab fa-linkedin"></i>
       </a>
 
-      <a href="resume.pdf" target="_blank">
+      <a href="resume.pdf" target="_blank" aria-label="Resume">
         <i class="fas fa-file-alt"></i>
       </a>
     </div>
