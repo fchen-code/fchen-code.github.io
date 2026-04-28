@@ -163,15 +163,16 @@ body {
 .tools { background: #8ad7da; }
 
 /* About page */
+/* About page */
 .about-layout {
-  max-width: 1500px;
+  max-width: 1400px;
   margin: 0 auto;
   min-height: calc(100vh - 90px);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 28px;
-  align-items: stretch;
-  padding: 70px 72px 120px;
+  align-items: center;
+  padding: 45px 70px 90px;
 }
 
 .about-card {
@@ -182,39 +183,39 @@ body {
 }
 
 .about-text {
-  padding: 34px 40px;
+  padding: 28px 34px;
 }
 
 .about-text h1 {
-  font-size: 66px;
+  font-size: 48px;
   line-height: 1;
-  margin: 0 0 30px 0;
+  margin: 0 0 22px 0;
   font-weight: 800;
 }
 
 .about-text p {
-  font-size: 22px;
-  line-height: 1.55;
+  font-size: 17px;
+  line-height: 1.5;
   color: #111;
-  margin: 0 0 26px 0;
+  margin: 0 0 18px 0;
 }
 
 .skills {
-  padding: 42px 52px;
+  padding: 30px 38px;
 }
 
 .skills h2 {
-  margin: 0 0 28px 0;
-  font-size: 42px;
+  margin: 0 0 20px 0;
+  font-size: 34px;
   line-height: 1;
 }
 
 .skill-row {
   display: grid;
-  grid-template-columns: 105px 1fr;
-  gap: 28px;
+  grid-template-columns: 76px 1fr;
+  gap: 20px;
   align-items: center;
-  padding: 22px 0;
+  padding: 16px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.13);
 }
 
@@ -223,8 +224,8 @@ body {
 }
 
 .skill-icon {
-  width: 92px;
-  height: 92px;
+  width: 66px;
+  height: 66px;
   border-radius: 50%;
   background: rgba(190, 220, 222, 0.45);
   display: flex;
@@ -233,148 +234,21 @@ body {
 }
 
 .skill-icon i {
-  font-size: 45px;
+  font-size: 30px;
   color: #5b9298;
 }
 
 .skill-info h3 {
-  margin: 0 0 12px 0;
-  font-size: 27px;
+  margin: 0 0 8px 0;
+  font-size: 22px;
   line-height: 1.1;
 }
 
 .skill-info p {
   margin: 0;
-  font-size: 22px;
+  font-size: 17px;
   line-height: 1.4;
 }
-
-/* Social icons bottom right */
-.social-icons {
-  position: fixed;
-  bottom: 25px;
-  right: 30px;
-  display: flex;
-  gap: 20px;
-  z-index: 1000;
-}
-
-.social-icons a {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(7px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  color: #6b7280;
-  text-decoration: none;
-  transition: 0.2s;
-}
-
-.social-icons a:hover {
-  color: #111;
-  transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.9);
-}
-
-/* Responsive */
-@media (max-width: 1100px) {
-  .about-layout {
-    grid-template-columns: 1fr;
-    padding: 50px 32px 120px;
-  }
-
-  .about-text h1 {
-    font-size: 54px;
-  }
-
-  .about-text p {
-    font-size: 19px;
-  }
-
-  .skill-info p {
-    font-size: 19px;
-  }
-}
-
-@media (max-width: 700px) {
-  .topbar {
-    flex-direction: column;
-    padding: 20px;
-    gap: 14px;
-  }
-
-  .nav {
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .hero {
-    padding: 30px;
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .photo-placeholder {
-    width: 280px;
-    height: 280px;
-  }
-
-  .hero-text h1 {
-    font-size: 56px;
-  }
-
-  .circle {
-    width: 115px;
-    height: 115px;
-  }
-
-  .about-layout {
-    padding: 30px 18px 110px;
-  }
-
-  .about-text,
-  .skills {
-    padding: 28px 24px;
-  }
-
-  .about-text h1 {
-    font-size: 44px;
-  }
-
-  .about-text p {
-    font-size: 17px;
-  }
-
-  .skills h2 {
-    font-size: 34px;
-  }
-
-  .skill-row {
-    grid-template-columns: 72px 1fr;
-    gap: 18px;
-  }
-
-  .skill-icon {
-    width: 64px;
-    height: 64px;
-  }
-
-  .skill-icon i {
-    font-size: 30px;
-  }
-
-  .skill-info h3 {
-    font-size: 22px;
-  }
-
-  .skill-info p {
-    font-size: 17px;
-  }
 
   .social-icons a {
     width: 48px;
