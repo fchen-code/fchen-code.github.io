@@ -162,14 +162,12 @@ body {
 .projects { background: #ef6f5b; }
 .tools { background: #8ad7da; }
 
-/* About page */
-/* About page */
 .about-layout {
-  max-width: 1400px;
+  max-width: 1350px;
   margin: 0 auto;
   min-height: calc(100vh - 90px);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.45fr 0.85fr;
   gap: 28px;
   align-items: center;
   padding: 45px 70px 90px;
@@ -183,73 +181,75 @@ body {
 }
 
 .about-text {
-  padding: 28px 34px;
+  padding: 32px 42px;
 }
 
 .about-text h1 {
-  font-size: 48px;
+  font-size: 54px;
   line-height: 1;
-  margin: 0 0 22px 0;
+  margin: 0 0 28px 0;
   font-weight: 800;
 }
 
 .about-text p {
-  font-size: 17px;
-  line-height: 1.5;
+  font-size: 18px;
+  line-height: 1.6;
   color: #111;
-  margin: 0 0 18px 0;
+  margin: 0 0 24px 0;
 }
 
-.skills {
-  padding: 30px 38px;
+.side-panel {
+  padding: 28px 32px;
 }
 
-.skills h2 {
-  margin: 0 0 20px 0;
-  font-size: 34px;
-  line-height: 1;
-}
-
-.skill-row {
-  display: grid;
-  grid-template-columns: 76px 1fr;
-  gap: 20px;
-  align-items: center;
-  padding: 16px 0;
+.panel-section {
+  padding-bottom: 22px;
+  margin-bottom: 22px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.13);
 }
 
-.skill-row:last-child {
+.panel-section:last-child {
   border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
-.skill-icon {
-  width: 66px;
-  height: 66px;
-  border-radius: 50%;
-  background: rgba(190, 220, 222, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.panel-section h2 {
+  font-size: 26px;
+  margin: 0 0 16px 0;
 }
 
-.skill-icon i {
-  font-size: 30px;
-  color: #5b9298;
-}
-
-.skill-info h3 {
-  margin: 0 0 8px 0;
-  font-size: 22px;
-  line-height: 1.1;
-}
-
-.skill-info p {
-  margin: 0;
+.skill-line {
   font-size: 17px;
-  line-height: 1.4;
+  line-height: 1.5;
+  margin: 0 0 8px 0;
 }
 
+.skill-line span {
+  color: #4f7fa4;
+  margin: 0 8px;
+}
+
+.panel-section ul {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.panel-section li {
+  font-size: 16px;
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+
+.panel-section p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 10px 0;
+}
+
+.panel-section strong {
+  color: #315f9e;
+}
   .social-icons a {
     width: 48px;
     height: 48px;
