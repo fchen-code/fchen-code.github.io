@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tools | Feng Chen</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+  <div class="page-overlay">
+    <header class="topbar">
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="tools.html">Tools</a>
+        <a href="about.html">More About Me</a>
+      </nav>
+    </header>
+
+    <main class="tools-page">
+      <section class="tools-intro">
+        <p class="eyebrow">TOOLS</p>
+        <h1>Small Bioinformatics Tools</h1>
+        <p>
+          A collection of small tools I’m building for fun and practice.
+        </p>
+      </section>
+
+      <section class="tool-grid">
+        <button class="tool-card" onclick="openTool('motifFinder')">
+          <h2>Motif Finder</h2>
+          <p>Find motif locations in a DNA or RNA sequence, including motifs with Ns</p>
+        </button>
+
+        <button class="tool-card" onclick="openTool('gcContent')">
+          <h2>GC Content</h2>
+          <p>Calculate the GC percentage in a DNA or RNA sequence</p>
+        </button>
+
+        <button class="tool-card" onclick="openTool('seqConverter')">
+          <h2>Seqence Converter</h2>
+          <p>Convert between DNA and RNA sequences or perform reverse complement</p>
+        </button>
+
+        <button class="tool-card" onclick="openTool('proConverter')">
+          <h2>Protein Translator</h2>
+          <p>Convert a DNA or RNA sequence into a protein</p>
+        </button>
+
+        <button class="tool-card" onclick="openTool('sqlExplorer')">
+          <h2>SQL</h2>
+          <p>Search TNBC ATAC-seq peaks using SQL</p>
+        </button>
+
+        <button class="tool-card" onclick="openTool('runBlast')">
+          <h2>Mini BLAST</h2>
+          <p>Search DNA sequences against cancer-related genes using k-mer seeding and ungapped alignment..</p>
+        </button>
+
+        <button class="tool-card" onclick="openTool('findKmer')">
+          <h2>K-mer Finder</h2>
+          <p>Generate all possible k-mers from a DNA or RNA sequence</p>
+        </button>
+
+        <button class="tool-card disabled">
+          <h2>Repeats Finder</h2>
+          <p>Not Available Yet</p>
+        </button>
+
+        <button class="tool-card disabled">
+          <h2>Smith-Waterman Alignment</h2>
+          <p>Not Available Yet</p>
+        </button>
+
+        <button class="tool-card disabled">
+          <h2>ORF Finder</h2>
+          <p>Not Available Yet</p>
+        </button>
+
+        <buttom class="tool-card disabled">
+          <h2>Needleman-Wunsch Alignment</h2>
+          <p>Not Available Yet</p>
+        </buttom>
+
+        <buttom class="tool-card disabled">
+          <h2>Sequence Dot Plot Viewer</h2>
+          <p>Not Available Yet</p>
+        </buttom>
+      </section>
+    </main>
+
+    <!-- Modal -->
+    <div id="toolModal" class="modal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeTool()">×</button>
+
+        <div id="motifFinder" class="tool-panel">
+          <h2>Motif Finder</h2>
+          <p class="tool-note">
+            Enter a DNA or RNA sequence and a motif, use N in the motif as any base
+          </p>
+
+          <label for="motifSequenceInput">DNA/RNA Sequence</label>
+          <textarea id="motifSequenceInput" placeholder="Example: ATGAAATGA"></textarea>
+
+          <label for="motifInput">Motif</label>
+          <input id="motifInput" type="text" placeholder="Example: ATGNNNTGA" />
+
+          <button class="run-btn" onclick="findMotif()">Find Motif</button>
+
+          <div id="motifResult" class="result-box"></div>
+        </div>
+        
+        <div id="gcContent" class="tool-panel">
+          <h2>GC Content</h2>
+          <p class="tool-note">
+            Enter a DNA or RNA sequence, support IUPAC Code
+          </p>
+
+          <label for="gcSequenceInput">DNA/RNA Sequence</label>
+          <textarea id="gcSequenceInput" placeholder="Example: ATGAAATGA"></textarea>
+
+          <button class="run-btn" onclick="gcContent()">Calculate GC Content</button>
+
+          <div id="gcResult" class="result-box"></div>
+        </div>
+
+        <div id="seqConverter" class="tool-panel">
+          <h2>Sequence Converter</h2>
+          <p class="tool-note">
+            Enter a DNA or RNA sequence and choose an option, support IUPAC Code
+          </p>
+
+          <label for="convertSequenceInput">DNA/RNA Sequence</label>
+          <textarea id="convertSequenceInput" placeholder="Example: ATGAAATGA"></textarea>
+
+          <button class="run-btn" onclick="seqConverter('dnatorna')">Convert DNA to RNA</button>
+          <button class="run-btn" onclick="seqConverter('rnatodna')">Convert RNA to DNA</button>
+          <button class="run-btn" onclick="seqConverter('reverseco')">Reverse Complement</button>
+
+          <div id="convertResult" class="result-box"></div>
+      </div>
+
+      <div id="proConverter" class="tool-panel">
+          <h2>Protein Translator</h2>
+          <p class="tool-note">
+            Enter a DNA or RNA sequence you want to translation to a protein<br>
+            Please noticed Stop will be shown as "*"
+          </p>
+
+          <label for="proSequenceInput">DNA/RNA Sequence</label>
+          <textarea id="proSequenceInput" placeholder="Example: ATGAAATGA"></textarea>
+
+          <button class="run-btn" onclick="proConverter()">Translate Protein</button>
+
+          <div id="proResult" class="result-box"></div>
+        </div>
+      
+      
+      <div id="sqlExplorer" class="tool-panel">
+        <h2>ATAC-seq SQL Explorer</h2>
+        <p class="tool-note">
+          Use SQL filters to explore TNBC ATAC-seq peak accessibility
+          This tool was built as part of my practice to improve SQL skills, 
+          using real data generated from my ATAC-seq TNBC project
+          Check out the Projects page for more details on the analysis
+        </p>
+        <div class="filter-grid">
+          <label>
+            Gene Symbol:
+          <input id="geneFilter" type="text" placeholder="Example: ESR1">
+          </label>
+          <label>
+            Annotation:
+            <input id="annotationFilter" type="text" placeholder="Example: Promoter">
+          </label>
+          <label>
+            Status:
+            <select id="directionFilter">
+              <option value="All" selected>All</option>
+              <option value="Open">Open</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </label>
+          <label>
+            Maximum FDR Value:
+            <input id="fdrFilter" type="number" step="0.001" placeholder="0.05">
+          </label>
+          <label>
+            Maximum Fold Change:
+            <input id="foldFilter" type="number" step="0.1" placeholder="1">
+          </label>
+          <label>
+            Limit:
+            <select id="limitFilter">
+              <option value="10">10</option>
+              <option value="25" selected>25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="All">All</option>
+            </select>
+          </label>
+          <label>
+            Sort by:
+            <select id="sortFilter">
+              <option value="None" selected></option>
+              <option value="GeneLength">Gene Length</option>
+              <option value="Fold">Fold</option>
+              <option value="FDR">FDR</option>
+            </select>
+            <select id="sortOrder">
+              <option value="ASC">Ascending</option>
+              <option value="DESC">Descending</option>
+            </select>
+          </label>
+        </div>
+        <button class="run-btn" onclick="sqlExplorer()">Run SQL</button>
+        <div id="sqlResult" class="result-box"></div>
+      </div>
+
+      <div id="runBlast" class="tool-panel">
+          <h2>Cancer BLAST</h2>
+          <p class="tool-note">
+            Mini BLAST DNA alignment tool built for practice using k-mer seeding, 
+            ungapped alignment, and a simple +1/-1 scoring system. The reference database 
+            contains several commonly
+            <a href="data/database.json" target="_blank">
+              cancer-related genes
+            </a><br>
+            Because computation is performed directly in the browser, 
+            sequences longer than 250 bp are not recommended 
+          </p>
+          
+          <label for="blastSequenceInput">DNA Sequence</label>
+          <textarea id="blastSequenceInput" placeholder="Example: ATGAAATGA"></textarea>
+
+          <label for="blastKmer">K-mers:</label>
+          <input id="blastKmer" type="number" step="1" value="6" />
+
+          <label for="blastScore">Mini Score:</label>
+          <div class="input-group">
+            <input id="blastScore" type="number" value="70" />
+            <span>%</span>
+          </div>
+
+          <label for="blastLimit">Limit:</label>
+          <input id="blastLimit" type="number" step="1" value="3" />
+
+          <button class="run-btn" onclick="runBlast()">Run BLAST</button>
+
+          <div id="blastResult" class="result-box"></div>
+        </div>
+
+        <div id="findKmer" class="tool-panel">
+          <h2>K-mer Finder</h2>
+          <p class="tool-note">
+            Enter a sequence to run k-mer finder
+          </p>
+          
+          <label for="kmerSequenceInput">Sequence</label>
+          <textarea id="kmerSequenceInput" placeholder="Example: ATGAAATGA"></textarea>
+
+          <label for="sizeKmer">K-mers:</label>
+          <input id="sizeKmer" type="number" step="1" value="3" />
+
+          <button class="run-btn" onclick="findKmer()">Find k-mer</button>
+
+          <div id="kmerResult" class="result-box"></div>
+        </div>
+
+    </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="tools.js"></script>
+</body>
+</html>

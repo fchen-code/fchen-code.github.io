@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>kNN Cancer Classification | Feng Chen</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="page-overlay">
+
+    <header class="topbar">
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="tools.html">Tools</a>
+        <a href="about.html">More About Me</a>
+      </nav>
+    </header>
+
+    <main class="project-detail-page">
+
+      <!-- HERO -->
+      <section class="project-detail-hero">
+        <p class="eyebrow">MACHINE LEARNING PROJECT</p>
+
+        <h1>kNN Classification for Breast Cancer Diagnosis</h1>
+
+        <p class="project-subtitle">
+          Built a custom k-nearest neighbors classifier to distinguish malignant and benign breast cancer samples using normalized diagnostic features.
+        </p>
+      </section>
+
+      <!-- OVERVIEW -->
+      <section class="project-section">
+        <h2>Project Overview</h2>
+
+        <p>
+          This project applies a k-nearest neighbors classification workflow to the Wisconsin Diagnostic Breast Cancer dataset.
+          The analysis focuses on building the model from the ground up, selecting an optimal k value, and evaluating performance using cross-validation, ROC/AUC, and final test-set metrics.
+        </p>
+      </section>
+
+      <!-- KEY RESULTS -->
+      <section class="project-section">
+        <h2>Key Results</h2>
+
+        <div class="findings-grid">
+          <div class="finding-card">
+            <h3>95.6%</h3>
+            <p>Final test accuracy using the selected k value.</p>
+          </div>
+
+          <div class="finding-card">
+            <h3>0.979</h3>
+            <p>AUC score on the test set, showing strong class separation.</p>
+          </div>
+
+          <div class="finding-card">
+            <h3>k = 3</h3>
+            <p>Optimal k selected using repeated 10-fold cross-validation.</p>
+          </div>
+
+          <div class="finding-card">
+            <h3>Leak-Free Scaling</h3>
+            <p>Z-score normalization was fit only on training data and applied to test data.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- WORKFLOW -->
+      <section class="project-section">
+        <h2>Basic Workflow Diagram</h2>
+        <div class="workflow-image">
+          <img src="images/knn workflow.png" alt="Knn workflow" />
+        </div>
+      </section>
+
+      <!-- WHAT I BUILT -->
+      <section class="project-section">
+        <h2>What I Built</h2>
+
+        <ul class="project-bullets">
+          <li>Implemented core kNN helper functions for distance calculation, neighbor selection, label prediction, and batch prediction.</li>
+          <li>Used z-score normalization based only on the training set to avoid data leakage.</li>
+          <li>Evaluated odd k values from 1 to 51 and confirmed model choice using repeated 10-fold cross-validation.</li>
+          <li>Calculated ROC curve and AUC to measure model discrimination beyond accuracy alone.</li>
+          <li>Reported final confusion-matrix metrics including true positives, true negatives, false positives, and false negatives.</li>
+        </ul>
+      </section>
+
+      <!-- VISUALIZATION GALLERY -->
+      <section class="project-section">
+        <h2>Visualization</h2>
+
+        <div class="visual-grid">
+          <div class="visual-card">
+            <img src="images/knn accuracy vs k.png" alt="kNN accuracy versus k plot">
+            <h3>Accuracy vs. k</h3>
+            <p>Compared model performance across odd k values from 1 to 51.</p>
+          </div>
+
+          <div class="visual-card">
+            <img src="images/knn auc.png" alt="kNN ROC curve">
+            <h3>ROC Curve</h3>
+            <p>Evaluated classification performance using probability-like malignant-neighbor scores.</p>
+          </div>
+
+          <div class="visual-card">
+            <img src="images/knn distributions.png" alt="Feature distribution histograms">
+            <h3>Feature Distributions</h3>
+            <p>Reviewed numeric feature distributions before model training.</p>
+          </div>
+
+          <div class="visual-card">
+
+  <h3>Final Prediction Summary</h3>
+
+  <table class="confusion-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Predicted Malignant</th>
+        <th>Predicted Benign</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <th>Actual Malignant</th>
+        <td class="matrix-good">49</td>
+        <td class="matrix-bad">4</td>
+      </tr>
+
+      <tr>
+        <th>Actual Benign</th>
+        <td class="matrix-bad">1</td>
+        <td class="matrix-good">60</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="metric-summary">
+    <span>Accuracy: 95.6%</span>
+    <span>AUC: 0.979</span>
+    <span>Optimal k: 3</span>
+  </div>
+
+</div>
+        </div>
+      </section>
+
+      <!-- METHODS -->
+      <section class="project-section">
+        <h2>Modeling Details</h2>
+
+        <div class="method-grid">
+          <div class="method-card">
+            <h3>Distance Metric</h3>
+            <p>Euclidean distance was used to measure similarity between normalized samples.</p>
+          </div>
+
+          <div class="method-card">
+            <h3>Target Classes</h3>
+            <p>Diagnosis was modeled as a two-class outcome: malignant and benign.</p>
+          </div>
+
+          <div class="method-card">
+            <h3>Model Selection</h3>
+            <p>Repeated 10-fold cross-validation was used to select a more reliable k value.</p>
+          </div>
+
+          <div class="method-card">
+            <h3>Evaluation</h3>
+            <p>Performance was evaluated using accuracy, confusion-matrix counts, ROC curve, and AUC.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERPRETATION -->
+      <section class="project-section">
+        <h2>Interpretation</h2>
+
+        <p>
+          The final model achieved strong classification performance, with high accuracy and an AUC close to 1.
+          The cross-validation results selected k = 3, which provided a more reliable choice than simply using the highest test-set accuracy from a single split.
+          This project demonstrates the full machine learning workflow from preprocessing and model construction to validation and performance interpretation.
+        </p>
+      </section>
+
+      <!-- TOOLS -->
+      <section class="project-section">
+        <h2>TOOLS USED</h2>
+
+        <h3>Programming & Analysis</h3>
+        <div class="tech-tags">
+          <span><a href="https://www.r-project.org/" target="_blank" rel="noopener noreferrer">R</a></span>
+          <span><a href="https://rmarkdown.rstudio.com/" target="_blank" rel="noopener noreferrer">R Markdown</a></span>
+        </div>
+
+        <h3>Machine Learning & Evaluation</h3>
+        <div class="tech-tags">
+          <span><a href="https://topepo.github.io/caret/" target="_blank" rel="noopener noreferrer">caret</a></span>
+          <span><a href="https://xrobin.github.io/pROC/" target="_blank" rel="noopener noreferrer">pROC</a></span>
+          <span>Custom kNN</span>
+          <span>Cross-Validation</span>
+          <span>ROC / AUC</span>
+        </div>
+
+        <h3>Data Handling & Reporting</h3>
+        <div class="tech-tags">
+          <span><a href="https://dplyr.tidyverse.org/" target="_blank" rel="noopener noreferrer">dplyr</a></span>
+          <span><a href="https://yihui.org/knitr/" target="_blank" rel="noopener noreferrer">knitr</a></span>
+          <span>Z-score Normalization</span>
+          <span>Train/Test Split</span>
+        </div>
+      </section>
+
+      <!-- LINKS -->
+      <section class="project-section">
+        <h2>R-Markdown</h2>
+
+        <div class="project-links">
+          <a href="https://fchen-code.github.io/kNN-cancer-classification/" class="btn">View Full Work</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</body>
+
+</html>

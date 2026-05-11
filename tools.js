@@ -1,0 +1,729 @@
+function openTool(toolId) {
+  document.getElementById("toolModal").style.display = "flex";
+
+  const panels = document.querySelectorAll(".tool-panel");
+  panels.forEach(panel => {
+    panel.style.display = "none";
+  });
+
+  document.getElementById(toolId).style.display = "block";
+}
+
+function closeTool() {
+  document.getElementById("toolModal").style.display = "none";
+}
+
+function findMotif() {
+  const sequences = document.getElementById("motifSequenceInput").value.toUpperCase();
+  const motif = document.getElementById("motifInput").value.toUpperCase().replace(/\s/g, "");
+  const resultBox = document.getElementById("motifResult");
+  const lines = sequences.split("\n");
+  let sequence = ""
+  for (let line of lines) {
+        if (line.startsWith(">"))
+            continue
+        sequence += line.replace(/\s/g, "")
+    }
+  const base = {
+    "A": ["A"],
+    "T": ["T"],
+    "C": ["C"],
+    "G": ["G"],
+    "U": ["U"],
+    "N": ["A", "T", "U", "C", "G"]
+  };
+
+  resultBox.innerHTML = "";
+
+  if (sequence.length === 0 || motif.length === 0) {
+    resultBox.innerHTML = "<p>Please enter both sequence and motif</p>";
+    return;
+  }
+
+  if (sequence.includes("U") && sequence.includes("T")){
+    resultBox.innerHTML = "<p>Mixed DNA/RNA detected from sequence, please use either T or U</p>";
+    return;
+  }
+
+  if (motif.includes("U") && motif.includes("T")) {
+    resultBox.innerHTML = "<p>Mixed DNA/RNA detected from motif, please use either T or U</p>";
+    return;
+  }
+
+  if (motif.length > sequence.length) {
+    resultBox.innerHTML = "<p>No Motif Found</p>";
+    return;
+  }
+
+  let result = false;
+  let output = "";
+
+  for (let i = 0; i <= sequence.length - motif.length; i++) {
+    let match = true;
+
+    for (let j = 0; j < motif.length; j++) {
+      if (!(motif[j] in base)) {
+        resultBox.innerHTML = `<p>Invalid motif character: ${motif[j]}</p>`;
+        return;
+      }
+
+      if (!(sequence[i + j] in base)) {
+        resultBox.innerHTML = `<p>Invalid sequence character: ${sequence[i + j]}</p>`;
+        return;
+      }
+
+      if (!base[motif[j]].includes(sequence[i + j])) {
+        match = false;
+        break;
+      }
+    }
+
+    if (match) {
+      result = true;
+      const start = i + 1;
+      const end = i + motif.length;
+      const matchedSeq = sequence.slice(i, i + motif.length);
+
+      output += `<p><strong>Position:</strong> ${start} - ${end} &nbsp; <strong>Match:</strong> ${matchedSeq}</p>`;
+    }
+  }
+
+  if (!result) {
+    resultBox.innerHTML = "<p>No Motif Found</p>";
+  } else {
+    resultBox.innerHTML = output;
+  }
+}
+
+function gcContent() {
+    const sequences = document.getElementById('gcSequenceInput').value.toUpperCase();
+    const resultBox = document.getElementById('gcResult');
+    const lines = sequences.split("\n")
+    resultBox.innerHTML = ""
+    let sequence = ""
+    let output = ""
+    for (let line of lines) {
+        if (line.startsWith(">"))
+            continue
+        sequence += line.replace(/\s/g, "")
+    }
+    if (sequence.length === 0) {
+    resultBox.innerHTML = "<p>Please enter a sequence</p>";
+    return;
+  }
+    const total_length = sequence.length;
+    const am_base = ["R", "Y", "S", "W", "K", "M", "B", "D", "H", "V"]
+    const g = [...sequence].filter(i => i === "G").length;
+    const c = [...sequence].filter(i => i === "C").length;
+    const a = [...sequence].filter(i => i === "A").length;
+    const t = [...sequence].filter(i => i === "T").length;
+    const u = [...sequence].filter(i => i === "U").length;
+    const n = [...sequence].filter(i => i === "N").length;
+    const am_count = [...sequence].filter(i => am_base.includes(i)).length;
+    if (sequence.includes("U") && sequence.includes("T")){
+        resultBox.innerHTML = "<p>Mixed DNA/RNA detected, please use either T or U</p>";
+        return;
+    } else if (sequence.includes("U")){
+        const augc = a + u + g + c;
+        let au = 0
+        let gc = 0
+        if (augc != 0) {
+            au = (a + u)/augc * 100
+            gc = (g + c)/augc * 100
+        }
+        const not_valid = total_length - augc - n - am_count;
+        output = `<p><strong>Type:</strong> RNA <br>
+        <strong>Total length:</strong> ${total_length} <br>
+        <strong>Valid Bases (A, U, G, C):</strong> ${augc} <br>
+        <strong>Ambiguous Bases without N (IUPAC Code):</strong> ${am_count} <br>
+        <strong>Not Valid Bases:</strong> "${not_valid}" <br>
+        <strong>A count:</strong> ${a} <strong>U count:</strong> ${u} <br>
+        <strong>G count:</strong> ${g} <strong>C count:</strong> ${c} <br>
+        <strong>N count (Unknown Base):</strong> ${n} <br>
+        <strong>AU content:</strong> ${au.toFixed(2)}% <br>
+        <strong>GC content:</strong> ${gc.toFixed(2)}%</p>`
+        resultBox.innerHTML = output;
+    } else {
+        const atgc = a + t + g + c;
+        let at = 0
+        let gc = 0
+        if (atgc != 0) {
+            at = (a + t)/atgc * 100
+            gc = (g + c)/atgc * 100
+        }
+        const not_valid = total_length - atgc - n - am_count;
+        output = `<p><strong>Type:</strong> DNA <br>
+        <strong>Total length:</strong> ${total_length} <br>
+        <strong>Valid Bases (A, T, G, C):</strong> ${atgc} <br>
+        <strong>Ambiguous Bases without N (IUPAC Code):</strong> ${am_count} <br>
+        <strong>Not Valid Bases:</strong> "${not_valid}" <br>
+        <strong>A count:</strong> ${a} <strong>T count:</strong> ${t} <br>
+        <strong>G count:</strong> ${g} <strong>C count:</strong> ${c} <br>
+        <strong>N count (Unknown Base):</strong> ${n} <br>
+        <strong>AT content:</strong> ${at.toFixed(2)}% <br>
+        <strong>GC content:</strong> ${gc.toFixed(2)}%</p>`
+        resultBox.innerHTML = output;
+    }
+}
+
+function seqConverter(test) {
+    const sequences = document.getElementById('convertSequenceInput').value.toUpperCase();
+    const resultBox = document.getElementById('convertResult');
+    const lines = sequences.split("\n")
+    resultBox.innerHTML = ""
+    let sequence = ""
+    let reversed = ""
+    let output = ""
+    let result = ""
+    let not_valid = []
+    for (let line of lines) {
+        if (line.startsWith(">"))
+            continue
+        sequence += line.replace(/\s/g, "")
+    }
+    if (sequence.length === 0) {
+        resultBox.innerHTML = "<p>Please enter a sequence</p>";
+        return;
+    }
+    switch (test) {
+        case "dnatorna":
+            if (sequence.includes("U") && sequence.includes("T")){
+                resultBox.innerHTML = "<p>Mixed DNA/RNA detected, please use only T</p>";
+                return;
+            }
+            const dna_rna = {A:"A", T:"U", G:"G", C:"C", N:"N",
+                R:"R", Y:"Y", S:"S", W:"W", K:"K",
+                M:"M", B:"B", D:"D", H:"H", V:"V"}
+            if ([...sequence].some(i => !(i in dna_rna))) {
+                not_valid = [...sequence].filter(i => !(i in dna_rna)).join("");
+                output = `<p>Invalid Characters "${not_valid}", Please Check</p>`;
+            } else {
+                for (let base of sequence) {
+                    result += dna_rna[base]
+                    output = `<p><strong>RNA:</strong> ${result}</p>`;
+                }
+            }
+            break
+        
+        case "rnatodna":
+            if (sequence.includes("U") && sequence.includes("T")){
+                resultBox.innerHTML = "<p>Mixed DNA/RNA detected, please use only U</p>";
+                return;
+            }
+            const rna_dna = {A:"A", U:"T", G:"G", C:"C", N:"N",
+                R:"R", Y:"Y", S:"S", W:"W", K:"K",
+                M:"M", B:"B", D:"D", H:"H", V:"V"}
+            if ([...sequence].some(i => !(i in rna_dna))) {
+                not_valid = [...sequence].filter(i => !(i in rna_dna)).join("");
+                output = `<p>Invalid Characters "${not_valid}", Please Check</p>`;
+            } else {
+                for (let base of sequence) {
+                    result += rna_dna[base]
+                    output = `<p><strong>DNA:</strong> ${result}</p>`;
+                }
+            }
+            break
+        
+        case "reverseco":
+            dna_complement = {
+                A: "T", T: "A",
+                G: "C", C: "G",
+                R: "Y", Y: "R",
+                S: "S", W: "W",
+                K: "M", M: "K",
+                B: "V", V: "B",
+                D: "H", H: "D",
+                N: "N"
+            }
+            rna_complement = {
+                A: "U", U: "A",
+                G: "C", C: "G",
+                R: "Y", Y: "R",
+                S: "S", W: "W",
+                K: "M", M: "K",
+                B: "V", V: "B",
+                D: "H", H: "D",
+                N: "N"
+            }
+            iupac_note = {
+                R: "A or G",
+                Y: "C or T/U",
+                S: "G or C",
+                W: "A or T/U",
+                K: "G or T/U",
+                M: "A or C",
+                B: "C or G or T/U",
+                D: "A or G or T/U",
+                H: "A or C or T/U",
+                V: "A or C or G",
+                N: "A or C or G or T/U"
+            }
+            not_valid = [...sequence].filter(i => !(i in dna_complement) && !(i in rna_complement)).join("");
+            if (sequence.includes("U") && sequence.includes("T")){
+                output = `<p>Mixed DNA/RNA detected, please use either T or U</p>`;
+
+            } else if (not_valid) {
+                output = `<p>Invalid Characters "${not_valid}", Please Check</p>`;
+
+            } else if (sequence.includes("U")) {
+                reversed = sequence.split("").reverse().join("")
+                for (let base of reversed) {
+                    result += rna_complement[base]
+                    output = `<p><strong>Reverse Complement:</strong> ${result}</p>`;
+                }
+            } else {
+                reversed = sequence.split("").reverse().join("")
+                for (let base of reversed) {
+                    result += dna_complement[base]
+                    output = `<p><strong>Reverse Complement:</strong> ${result}</p>`;
+                }
+            }
+            const iupacBases = new Set(
+                [...result].filter(i => i in iupac_note));
+                
+            if (iupacBases.size > 0) {
+                output += `<p><strong>IUPAC Bases Detected:</strong></p>`;
+                for (const i of iupacBases) {
+                    output += `${i}: ${iupac_note[i]} <br>`;
+                }
+            }
+            break    
+        }
+    
+    resultBox.innerHTML = output;
+}
+
+function proConverter () {
+    const sequences = document.getElementById('proSequenceInput').value.toUpperCase();
+    const resultBox = document.getElementById('proResult');
+    const lines = sequences.split("\n")
+    resultBox.innerHTML = ""
+    let sequence = ""
+    let output = ""
+    let result = ""
+    let not_valid = []
+    const valid_list = ["A", "T", "G", "C", "U"]
+    const codon_table = {
+        UUU: "F", UUC: "F", UUA: "L", UUG: "L",
+        UCU: "S", UCC: "S", UCA: "S", UCG: "S",
+        UAU: "Y", UAC: "Y", UAA: "*", UAG: "*",
+        UGU: "C", UGC: "C", UGA: "*", UGG: "W",
+        CUU: "L", CUC: "L", CUA: "L", CUG: "L",
+        CCU: "P", CCC: "P", CCA: "P", CCG: "P",
+        CAU: "H", CAC: "H", CAA: "Q", CAG: "Q",
+        CGU: "R", CGC: "R", CGA: "R", CGG: "R",
+        AUU: "I", AUC: "I", AUA: "I", AUG: "M",
+        ACU: "T", ACC: "T", ACA: "T", ACG: "T",
+        AAU: "N", AAC: "N", AAA: "K", AAG: "K",
+        AGU: "S", AGC: "S", AGA: "R", AGG: "R",
+        GUU: "V", GUC: "V", GUA: "V", GUG: "V",
+        GCU: "A", GCC: "A", GCA: "A", GCG: "A",
+        GAU: "D", GAC: "D", GAA: "E", GAG: "E",
+        GGU: "G", GGC: "G", GGA: "G", GGG: "G"
+    };
+    
+    function proteinTranslation(seq, codonTable) {
+        let codList = [];
+        let proResult = "";
+        let inResult = "";
+        for (let i = 0; i < seq.length; i += 3) {
+            codList.push(seq.slice(i, i + 3));
+        }
+        for (let codon of codList) {
+            if (codon.length === 3) {
+                proResult += codonTable[codon];
+            } else {
+                inResult += codon;
+            }
+        }
+        return {
+            protein: proResult,
+            incomplete: inResult
+        };
+    }
+
+    for (let line of lines) {
+        if (line.startsWith(">"))
+            continue
+        sequence += line.replace(/\s/g, "")
+    }
+
+    not_valid = [...sequence].filter(i => !(valid_list.includes(i))).join("");
+
+    if (sequence.length === 0) {
+        resultBox.innerHTML = "<p>Please enter a sequence</p>";
+        return;
+    }
+    if (sequence.includes("T") && sequence.includes("U")) {
+        resultBox.innerHTML = "<p>Mixed DNA/RNA detected from motif, please use either T or U</p>";
+        return;
+    } else if (not_valid) {
+        resultBox.innerHTML = `<p>Invalid Characters "${not_valid}", Please Check</p>`;
+        return;
+    } else if (sequence.includes("T")) {
+        sequence = sequence.replace(/T/g, "U");
+        result = proteinTranslation(sequence, codon_table)
+        if (result.incomplete) {
+            output = `<p><strong>Type:</strong> DNA <br>
+            <strong>RNA:</strong> ${sequence} <br>
+            <strong>Protein:</strong> ${result.protein} <br>
+            <strong>Warning:</strong> Incomplete codon "${result.incomplete}" are ignored</p>`
+        } else {
+            output = `<p><strong>Type:</strong> DNA <br>
+            <strong>RNA:</strong> ${sequence} <br>
+            <strong>Protein:</strong> ${result.protein}</p>`
+        }
+    } else {
+        result = proteinTranslation(sequence, codon_table)
+        if (result.incomplete) {
+            output = `<p><strong>Type:</strong> RNA <br>
+            <strong>Protein:</strong> ${result.protein} <br>
+            <strong>Warning:</strong> Incomplete codon "${result.incomplete}" are ignored</p>`
+        } else {
+            output = `<p><strong>Type:</strong> RNA <br>
+            <strong>Protein:</strong> ${result.protein}</p>`
+    }
+}
+
+    resultBox.innerHTML = output;
+}
+
+async function loadSQLdata() {
+  const response = await fetch("data/tnbc_data.csv");
+  const text = await response.text();
+}
+
+let db;
+
+async function initDatabase() {
+    const SQL = await initSqlJs({
+        locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${file}`
+    });
+    db = new SQL.Database();
+
+    db.run(`
+        CREATE TABLE peaks (
+            Chromosome TEXT,
+            GeneStart INTEGER,
+            GeneEnd INTEGER,
+            GeneLength INTEGER,
+            ConcTumor REAL,
+            ConcNormal REAL,
+            Fold REAL,
+            FDR REAL,
+            Annotation TEXT,
+            Symbol TEXT,
+            GeneName TEXT,
+            Direction TEXT
+        );
+    `);
+
+    const response = await fetch("data/tnbc_data.csv");
+    const text = await response.text();
+
+    const lines = text.trim().split(/\r?\n/);
+    const rows = lines.slice(1).map(line => line.split(","));
+
+    const stmt = db.prepare(`
+        INSERT INTO peaks (
+            Chromosome, GeneStart, GeneEnd, GeneLength, 
+            ConcTumor, ConcNormal, Fold, FDR, 
+            Annotation, Symbol, GeneName, Direction
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    for (const row of rows) {
+        stmt.run([
+            row[0],             // chr
+            Number(row[1]),     // start
+            Number(row[2]),     // end
+            Number(row[3]),     // fold_change
+            Number(row[4]),     // fdr
+            Number(row[5]),     // conc_tumor
+            Number(row[6]),     // conc_normal
+            Number(row[7]),             // annotation
+            row[8],             // gene_symbol
+            row[9],            // gene_name
+            row[10],
+            row[11]             // direction
+        ]);
+    }
+
+    stmt.free();
+}
+
+
+initDatabase()
+
+function sqlExplorer() {
+    const resultBox = document.getElementById("sqlResult");
+    const symbol = document.getElementById("geneFilter").value
+    const annotation = document.getElementById("annotationFilter").value
+    const direction = document.getElementById("directionFilter").value
+    const fdr = document.getElementById("fdrFilter").value
+    const fold = document.getElementById("foldFilter").value
+    const limit = document.getElementById("limitFilter").value
+    const sort = document.getElementById("sortFilter").value
+    const order = document.getElementById("sortOrder").value
+
+    let output = "SELECT * FROM peaks WHERE GeneLength >= 0"
+
+    if (symbol) {
+        output += ` AND Symbol LIKE '%${symbol}%'`;
+    }
+    if (annotation) {
+        output += ` AND Annotation LIKE '%${annotation}%'`;
+    }
+    if (fdr) {
+        output += ` AND FDR <= ${fdr}`;
+    }
+    if (fold) {
+        output += ` AND Fold <= ${fold}`;
+    }
+    if (direction === "Open") {
+        output +=  ` AND Direction = '${direction}'`;
+    } else if (direction === "Closed") {
+        output += ` AND Direction = '${direction}'`;
+    }
+
+    if (sort != "None") {
+        output += ` ORDER BY ${sort} ${order}`
+    } 
+
+    if (limit != "All") {
+        output += ` LIMIT ${limit};`;
+    } else {
+        output += `;`;
+    }
+
+    const result = db.exec(output);
+
+    if (result.length === 0) {
+    resultBox.innerHTML = "<p>No results</p>";
+    return;
+    }
+    
+    const columns = result[0].columns;
+    const values = result[0].values;
+    
+    let html = "<table border='1'><tr>";
+    
+    for (let col of columns) {
+        html += `<th>${col}</th>`;
+    }
+
+    html += "</tr>";
+
+    for (let row of values) {
+        html += "<tr>";
+        for (let cell of row) {
+            html += `<td>${cell}</td>`;
+        }
+        
+        html += "</tr>";
+    }
+    
+    html += "</table>";
+    
+    resultBox.innerHTML = html;
+
+}
+
+async function runBlast() {
+    
+    async function loadDatabase() {
+        const response = await fetch("data/database.json");
+        const database = await response.json();
+        return database;
+    }
+    const resultBox = document.getElementById("blastResult");
+    const database = await loadDatabase();
+    const sequences = document.getElementById('blastSequenceInput').value.toUpperCase();
+    let sequence = "";
+    const lines = sequences.split("\n")
+    for (let line of lines) {
+        if (line.startsWith(">"))
+            continue
+        sequence += line.replace(/\s/g, "")
+    }
+    const kmer = parseInt(document.getElementById("blastKmer").value) || 8;
+    const score = parseInt(document.getElementById("blastScore").value) || 70;
+    const limit = parseInt(document.getElementById("blastLimit").value) || 5;
+    
+    if(!sequences) {
+        resultBox.innerHTML = "Please enter a sequence to run BLAST.";
+        return;
+    }
+
+    if(sequence.length < kmer) {
+        resultBox.innerHTML = "Please ajust the k-mer value to match sequence length.";
+        return;
+    }
+
+    function k_mer(seq = sequence, k = kmer) {
+        const kmerList = [];
+        for (let i = 0; i <= seq.length - k; i++) {
+            kmerList.push(seq.slice(i, i + k));
+        }
+
+        return kmerList;
+    }
+
+    function kmer_search(kmers, data = database) {
+        const info = [];
+            for (const i in data) {
+                const sequence = data[i];
+                kmers.forEach((kmer, n) => {
+                    for (let k = 0; k <= sequence.length - kmer.length; k++) {
+                        const sl = sequence.slice(k, k + kmer.length);
+                        
+                        if (sl === kmer) {
+                            info.push({
+                                gene: i,
+                                kmer_position: n,
+                                kmer: kmer,
+                                position: k
+                            });
+                        }
+                    }
+                });
+            }
+            
+            return info;
+        }
+    
+    function kmer_extract(info, data = database, seq = sequence) {
+        const valid_info = [];
+        for (const i of info) {
+            const gene_name = i.gene;
+            const gene_seq = data[gene_name];
+            const seq_len = seq.length;
+            const start = i.position - i.kmer_position;
+            if (start < 0 || start + seq_len > gene_seq.length) {
+                continue;
+            }
+            
+            const region = gene_seq.slice(start, start+seq_len);
+            
+            valid_info.push({
+                ...i,
+                region: region,
+                start: start,
+                end: start + seq_len,
+                sequence: seq
+                });
+        }
+        return valid_info;
+    }
+
+
+    function score_cal(info) {
+        const score_info = [];
+        for (const i of info) {
+            let score = 0;
+            let line = "";
+            const len_seq = i.sequence.length;
+            const len_region = i.region.length;
+            for (let r = 0; r < len_region; r++) {
+                if (i.region[r] === i.sequence[r]) {
+                    score += 1;
+                    line += "|"
+                } else {
+                    score -= 1;
+                    line += " ";
+                }
+            }
+            const matches = line.split("|").length - 1
+            score_info.push({
+                ...i,
+                score: score,
+                line: line,
+                matches: matches,
+                identity: (matches / len_seq) * 100
+            });
+        }
+        return score_info;
+    }
+
+    function duplicate_removal(info, k = kmer) {
+        info.sort((a, b) => b.score - a.score);
+        const unique_info = [];
+        for (const i of info) {
+            let duplicate = false;
+            for (const j of unique_info) {
+                const same_gene = i.gene === j.gene;
+                const nearby = Math.abs(i.start - j.start) <= k;
+                if (same_gene && nearby) {
+                    duplicate = true;
+                    break;
+                }
+            }
+            if (!duplicate) {
+                unique_info.push(i);
+            }
+        }
+        return unique_info;
+    }
+
+    function resultOutput(info, top = limit, minIdentity = score) {
+        
+        const sorted = [...info].sort((a, b) => b.score - a.score);
+        const filtered = sorted.filter(i => i.identity >= minIdentity);
+        const strong = filtered.slice(0, top);
+
+        if (strong.length === 0) {
+            resultBox.innerHTML = "No strong matches found.";
+            return;
+        }
+        let output = "";
+        for (const i of strong) {
+            output += `
+            <p><strong>Gene:</strong> ${i.gene}</p>
+            <p><strong>Score:</strong> ${i.score}</p>
+            <p><strong>Identity:</strong> ${i.identity.toFixed(2)}%</p>
+            <p><strong>Position:</strong> ${i.start}-${i.end}</p>
+            <pre>
+            <strong>Query:</strong>  ${i.sequence}
+                    ${i.line}
+            <strong>Target:</strong> ${i.region}
+            </pre>
+            <hr>`
+        };
+        resultBox.innerHTML = output;
+    }
+    const kmers = k_mer(sequence, kmer);
+    const hits = kmer_search(kmers, database);
+    const extracted = kmer_extract(hits, database, sequence);
+    const scored = score_cal(extracted);
+    const unique = duplicate_removal(scored, kmer);
+    resultOutput(unique, limit, score);
+}
+
+function findKmer() {
+    const sequences = document.getElementById("kmerSequenceInput").value.toUpperCase();
+    const kmer = parseInt(document.getElementById("sizeKmer").value);
+    let output = "";
+    let sequence = "";
+    const resultBox = document.getElementById("kmerResult")
+    const lines = sequences.split("\n")
+    for (let line of lines) {
+        if (line.startsWith(">"))
+            continue
+        sequence += line.replace(/\s/g, "")
+    }
+    if (!sequences) {
+        resultBox.innerHTML = "Please enter a sequence.";
+        return;
+    }
+    function k_mer(seq = sequence, k = kmer) {
+        const kmerList = [];
+        for (let i = 0; i <= seq.length - k; i++) {
+            kmerList.push(seq.slice(i, i + k));
+        }
+
+        resultBox.innerHTML = `<p><strong>Result:</strong> ${kmerList}</p>`;
+    }
+
+    k_mer();
+}

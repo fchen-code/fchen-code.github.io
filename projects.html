@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Feng Chen</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="page-overlay">
+        <header class="topbar">
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="tools.html">Tools</a>
+                <a href="about.html">More About Me</a>
+            </nav>
+        </header>
+    
+    
+    <main class="projects-page">
+        <section class="projects-intro">
+            <p class="eyebrow">WORKS</p>
+            <h1>Bioinformatic Projects</h1>
+            <p>
+                Bioinformatics projects focused on sequencing analysis, reproducible workflows,
+                genomics pipelines, and data visualization.
+            </p>
+        </section>
+
+    <section class="projects-grid">
+
+      <!-- Project 1 -->
+       
+      <article class="project-card">
+        <img src="images/nextflow green.png" alt="Nextflow sequencing pipeline workflow" />
+
+        <div class="project-content">
+
+          <h2>Multi-Assay Bulk Sequencing Pipeline</h2>
+
+          <ul>
+            <li>Designed modular Nextflow DSL2 workflows for RNA-seq, ATAC-seq, and ChIP-seq analysis.</li>
+            <li>Automated FASTQ QC, trimming, alignment, quantification, and organized output generation.</li>
+            <li>Supported both local and HPC execution for scalable and reproducible analysis.</li>
+          </ul>
+          
+          <div class="tags">
+            <span>Nextflow</span>
+            <span>Docker</span>
+            <span>HPC</span>
+            <span>NGS</span>
+            <span>Bulk Sequencing</span>
+            <span>RNA-seq</span>
+            <span>ATAC-seq</span>
+            <span>ChIP-seq</span>
+          </div>
+          
+          <div class="project-links">
+            <a href="project-pipeline.html" class="btn">View Project</a>
+            <a href="https://github.com/fchen-code/Bulk-Sequencing-Pipeline" class="btn secondary">GitHub</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project-card">
+        <img src="images/ATAC project.png" alt="ATAC-seq and RNA-seq project visualization" />
+
+        <div class="project-content">
+          <h2>ATAC-seq & RNA-seq Analysis of TNBC</h2>
+
+          <ul>
+            <li>Integrated chromatin accessibility and gene expression data to study regulatory patterns in triple-negative breast cancer.</li>
+            <li>Identified 1,435 differentially accessible regions using statistical testing with FDR &lt; 0.05.</li>
+            <li>Performed GO, KEGG, and GSEA enrichment analysis to interpret biological pathways.</li>
+          </ul>
+          <div class="tags">
+            <span>R</span>
+            <span>DESeq2</span>
+            <span>DiffBind</span>
+            <span>ATAC-seq</span>
+            <span>RNA-seq</span>
+            <span>Functional Enrichment Analysis</span>
+            <span>Gene-Set Enrichment Analysis</span>
+          </div>
+          <div class="project-links">
+            <a href="project-atac.html" class="btn">View Project</a>
+            <a href="https://fchen-code.github.io/atac_rna_tnbc/#Loading_libraries" class="btn secondary">GitHub</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="project-card">
+        <img src="images/knn.png" alt="Breast cancer machine learning project" />
+
+        <div class="project-content">
+
+          <h2>Breast Cancer Classification using KNN</h2>
+
+          <ul>
+            <li>Built a K-nearest-neighbors classifier using the Wisconsin Breast Cancer dataset.</li>
+            <li>Applied preprocessing, normalization, cross-validation, and model evaluation.</li>
+            <li>Achieved over 95% accuracy and reported results using confusion matrix and ROC curve.</li>
+          </ul>
+
+          <div class="tags">
+            <span>R</span>
+            <span>Machine Learning</span>
+            <span>KNN</span>
+            <span>Classification</span>
+            <span>Supervised Learning</span>
+            <span>Cross Validation</span>
+            <span>Feature Scaling</span>
+            <span>Confusion Matrix</span>
+            <span>ROC Curve</span>
+          </div>
+
+          <div class="project-links">
+            <a href="project-knn.html" class="btn">View Project</a>
+            <a href="https://fchen-code.github.io/kNN-cancer-classification/" class="btn secondary">GitHub</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 4 -->
+      <article class="project-card">
+
+        <div class="project-content">
+
+          <h2>Computer Vision</h2>
+
+          <ul>
+          </ul>
+          <div class="tags">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="project-links">
+            <a class="btn disabled">Not Available Yet</a>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+</body>
+</html>

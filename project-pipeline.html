@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi-Assay NGS Pipeline | Feng Chen</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="page-overlay">
+    <header class="topbar">
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="tools.html">Tools</a>
+        <a href="about.html">More About Me</a>
+      </nav>
+    </header>
+
+    <main class="project-detail-page">
+
+      <!-- 1. Title + Summary -->
+      <section class="project-detail-hero">
+        <p class="eyebrow">PROJECT</p>
+        <h1>Multi-Assay NGS Pipeline</h1>
+        <p class="project-subtitle">
+          A modular Nextflow DSL2 pipeline for RNA-seq, ATAC-seq, and ChIP-seq analysis,
+          supporting reproducible workflows across local and HPC environments.
+        </p>
+      </section>
+
+      <!-- 2. Problem / Motivation -->
+      <section class="project-section">
+        <h2>Why I Built</h2>
+        <p>
+          Preprocessing is a required step for all sequencing data and often follows a repetitive
+          and error-prone workflow when performed manually. This makes it difficult to ensure
+          consistency and scalability across multiple datasets. To address this, I developed a
+          reproducible and automated pipeline that standardizes preprocessing steps, reduces human
+          error, and significantly improves efficiency for large-scale sequencing analysis.
+        </p>
+      </section>
+
+      <!-- 3. What You Built -->
+      <section class="project-section">
+        <h2>What I Built</h2>
+        <ul class="project-bullets">
+          <li>Designed modular Nextflow DSL2 workflows supporting RNA-seq, ATAC-seq, and ChIP-seq analysis across multiple samples.</li>
+          <li>Automated end-to-end preprocessing, including FASTQ quality control, trimming, alignment, and quantification.</li>
+          <li>Supported multi-sample processing through a metadata-driven CSV input system for both SRA and local data.</li>
+          <li>Integrated widely used tools including FastQC, fastp, STAR, Bowtie2, and MultiQC.</li>
+          <li>Built in reference genome and blacklist handling with support for custom user inputs.</li>
+          <li>Provided flexible parameter configuration for assay-specific preprocessing and filtering.</li>
+          <li>Enabled scalable execution on both local and HPC environments.</li>
+          <li>Ensured reproducibility through containerized execution using Docker.</li>
+          <li>Organized outputs into structured directories for downstream analysis and reporting.</li>
+        </ul>
+      </section>
+
+      <!-- 4. Workflow Diagram Placeholder -->
+      <section class="project-section">
+        <h2>Basic Workflow Diagram</h2>
+        <div class="workflow-image">
+          <img src="images/Pipeline.png" alt="Nextflow sequencing pipeline workflow" />
+        </div>
+      </section>
+
+      <!-- 5. Results / Output Placeholder -->
+      <section class="project-section">
+        <h2>Output Examples</h2>
+        <p>Below are examples of the pipeline outputs generated from real sequencing datasets. The results shown were produced using SRR453566 (RNA-seq) and SRR27410792 (ATAC-seq).</p>
+
+        <div class="results-grid">
+          <div class="output-structure-box">
+
+  <h3>Example Output Structure</h3>
+
+  <pre class="tree-preview"><code>
+results
+├── atac
+│   ├── ATAC-Test-Run
+│   │   └── SRR27410792
+│   │       ├── alignment
+│   │       │   ├── SRR27410792.bowtie2.log
+│   │       │   ├── SRR27410792_final_sorted.bam
+│   │       │   ├── SRR27410792_final_sorted.bam.bai
+│   │       │   ├── SRR27410792_sorted_dedup.txt
+│   │       │   ├── filtered.bam
+│   │       │   ├── sorted.bam
+│   │       │   └── sorted_dedup.bam
+│   │       ├── homer
+│   │       │   └── tagdir
+│   │       │       ├── I.tags.tsv
+  </code></pre>
+
+  <a href="data/Tree_Output.txt" target="_blank" class="btn">
+    View Full Output Tree
+  </a>
+
+</div>
+            
+  <div class="multiqc-item">
+    <h3>MultiQC Examples</h3>
+    <p>Read Quality QC</p>
+
+    <img src="images/ATAC multiqc read.png"
+         alt="ATAC read MultiQC">
+
+    <a href="multiqc_report_read.html"
+       target="_blank"
+       class="btn">
+       View Full Report
+    </a>
+    <p>Alignment QC</p>
+
+    <img src="images/ATAC multiqc alignment.png"
+         alt="ATAC alignment MultiQC">
+
+    <a href="multiqc_report_alignment.html"
+       target="_blank"
+       class="btn">
+       View Full Report
+    </a>
+  </div>
+
+          <div class="featurecount-preview">
+            <h3>FeatureCount Example</h3>
+            <pre class="fc-preview"><code>
+# Program:featureCounts v2.1.1; Command:"featureCounts" "-T" "1" "-p" "-B" "-s" "0" "-t" "exon" "-g" "gene_id" "-a" "unzipped.gtf" "-o" "SRR453566_featurecounts.txt" "SRR453566_final_sorted.bam" 
+Geneid	Chr	Start	End	Strand	Length	SRR453566_final_sorted.bam
+YDL246C	IV	8683	9756	-	1074	4
+YDL243C	IV	17577	18566	-	990	207
+YDR387C	IV	1248154	1249821	-	1668	481
+YDL094C	IV	289572	290081	-	510	23
+YDR438W	IV	1338274	1339386	+	1113	210
+YDR523C	IV	1485566	1487038	-	1473	38
+YDR542W	IV	1523249	1523611	+	363	0
+  </code></pre>
+  <a href="data/SRR453566_featurecounts.txt"
+       target="_blank"
+       class="btn">
+       View Full Report
+    </a>
+          </div>
+
+          <div class="narrowpeak-preview">
+            <h3>NarrowPeak Example</h3>
+            <pre class="np-preview"><code>
+I	73	568	SRR27410792_peak_1	149	.	6.98961	18.7434	14.9632	222
+I	20731	21064	SRR27410792_peak_2	59	.	4.28395	8.31299	5.97829	205
+I	38886	39051	SRR27410792_peak_3	30	.	3.12812	4.76334	3.05207	45
+I	45336	45716	SRR27410792_peak_4	59	.	4.28395	8.31299	5.97829	150
+I	58202	58610	SRR27410792_peak_5	21	.	2.65869	3.67721	2.13091	280
+I	60770	61238	SRR27410792_peak_6a	34	.	3.18083	5.27043	3.46667	75
+I	60770	61238	SRR27410792_peak_6b	34	.	3.15302	5.21219	3.41481	374
+I	62640	62879	SRR27410792_peak_7	55	.	3.90148	7.77312	5.54097	59
+I	68209	68715	SRR27410792_peak_8	52	.	3.20152	7.40092	5.24896	191
+  </code></pre>
+  <a href="data/SRR27410792_peaks.narrowPeak"
+       target="_blank"
+       class="btn">
+       View Full Report
+    </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Tech Stack -->
+      <section class="project-section">
+        <h2>TOOLS USED</h2>
+        <h3>Workflow & Infrastructure</h3>
+<div class="tech-tags">
+  <span><a href="https://www.nextflow.io" target="_blank" rel="noopener noreferrer">Nextflow DSL2</a></span>
+  <span><a href="https://www.docker.com" target="_blank" rel="noopener noreferrer">Docker</a></span>
+  <span><a href="https://slurm.schedmd.com" target="_blank" rel="noopener noreferrer">SLURM</a></span>
+  <span><a href="https://github.com/ncbi/sra-tools" target="_blank" rel="noopener noreferrer">sra-tools</a></span>
+</div>
+
+<h3>Preprocessing & QC</h3>
+<div class="tech-tags">
+  <span><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/" target="_blank">FastQC</a></span>
+  <span><a href="https://github.com/OpenGene/fastp" target="_blank">fastp</a></span>
+  <span><a href="https://multiqc.info" target="_blank">MultiQC</a></span>
+</div>
+
+<h3>Alignment</h3>
+<div class="tech-tags">
+  <span><a href="https://github.com/alexdobin/STAR" target="_blank">STAR</a></span>
+  <span><a href="http://bowtie-bio.sourceforge.net/bowtie2/index.shtml" target="_blank">Bowtie2</a></span>
+</div>
+
+<h3>Post-processing</h3>
+<div class="tech-tags">
+  <span><a href="http://www.htslib.org/" target="_blank">samtools</a></span>
+  <span><a href="https://github.com/biod/sambamba" target="_blank">sambamba</a></span>
+  <span><a href="https://bedtools.readthedocs.io/" target="_blank">bedtools</a></span>
+  <span><a href="https://broadinstitute.github.io/picard/" target="_blank">picard</a></span>
+  <span><a href="http://hgdownload.soe.ucsc.edu/admin/exe/" target="_blank">bedGraphToBigWig</a></span>
+</div>
+
+<h3>Analysis</h3>
+<div class="tech-tags">
+  <span><a href="http://subread.sourceforge.net/" target="_blank">featureCounts (subread)</a></span>
+  <span><a href="https://github.com/gpertea/gffread" target="_blank">gffread</a></span>
+  <span><a href="https://github.com/macs3-project/MACS" target="_blank">MACS3</a></span>
+  <span><a href="http://homer.ucsd.edu/homer/" target="_blank">HOMER</a></span>
+</div>
+      </section>
+
+      <!-- 7. GitHub Placeholder -->
+      <section class="project-section">
+        <h2>Code and How to Use</h2>
+        <P><strong>Download Use Command Line:</strong> git clone https://github.com/fchen-code/Bulk-Sequencing-Pipeline.git</P>
+        <P><strong>Move to Directory:</strong> cd Bulk-Sequencing-Pipeline</P>
+        <p><strong>Open README:</strong> cat README.md</p>
+        <div class="project-links">
+          <a href="https://github.com/fchen-code/Bulk-Sequencing-Pipeline" class="btn">View Code on GitHub</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

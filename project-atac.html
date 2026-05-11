@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATAC-seq & RNA-seq Analysis of TNBC | Feng Chen</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="page-overlay">
+    <header class="topbar">
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="tools.html">Tools</a>
+        <a href="about.html">More About Me</a>
+      </nav>
+    </header>
+
+    <main class="project-detail-page">
+
+      <section class="project-detail-hero">
+        <p class="eyebrow">PROJECT</p>
+        <h1>ATAC-seq & RNA-seq Analysis of TNBC</h1>
+        <p class="project-subtitle">
+          Integrated chromatin accessibility and gene expression analysis to identify
+          regulatory changes associated with triple-negative breast cancer.
+        </p>
+
+      </section>
+
+      <section class="project-section">
+        <h2>Project Summary</h2>
+        <p>
+          This project used publicly available sequencing data to analyze regulatory changes
+          in triple-negative breast cancer. ATAC-seq was used to identify differential chromatin
+          accessibility between tumor and normal samples, while RNA-seq was used as a validation
+          step to compare accessibility changes with gene expression changes.
+        </p>
+      </section>
+
+      <section class="project-section">
+        <h2>Key Findings</h2>
+
+        <div class="findings-grid">
+          <div class="finding-card">
+            <h3>1,435</h3>
+            <p>Significant differentially accessible regions identified at FDR &lt; 0.05.</p>
+          </div>
+
+          <div class="finding-card">
+            <h3>Open Chromatin</h3>
+            <p>Most significant regions showed increased accessibility in tumor samples.</p>
+          </div>
+
+          <div class="finding-card">
+            <h3>Pathway Signals</h3>
+            <p>GSEA highlighted hormone response, KRAS signaling, immune response, and cell adhesion pathways.</p>
+          </div>
+
+          <div class="finding-card">
+            <h3>RNA Validation</h3>
+            <p>ATAC open genes significantly overlapped with RNA upregulated genes.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="project-section">
+          <h2>Basic Workflow Diagram</h2>
+        <div class="workflow-image">
+          <img src="images/ATAC workflow.png" alt="ATAC workflow" />
+        </div>
+      </section>
+
+      <section class="project-section">
+        <h2>Visualization Gallery</h2>
+
+        <div class="visual-grid">
+          <div class="visual-card">
+            <img src="images/PCA.png" alt="MA plot for tumor versus normal ATAC-seq comparison">
+            <h3>MA Plot</h3>
+            <p>Shows differential accessibility patterns between tumor and normal samples.</p>
+          </div>
+
+          <div class="visual-card">
+            <img src="images/Volcano.png" alt="Volcano plot for differential accessibility">
+            <h3>Volcano Plot</h3>
+            <p>Highlights significant regions based on fold change and FDR.</p>
+          </div>
+
+          <div class="visual-card">
+            <img src="images/AnnoPie.png" alt="Peak annotation pie chart">
+            <h3>Peak Annotation</h3>
+            <p>Summarizes genomic distribution of differentially accessible peaks.</p>
+          </div>
+
+          <div class="visual-card">
+            <img src="images/KEGG.png" alt="KEGG enrichment dot plot">
+            <h3>KEGG / GSEA Enrichment</h3>
+            <p>Identifies biological pathways associated with open chromatin regions.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="project-section">
+        <h2>Biological Interpretation</h2>
+        <p>
+          The analysis suggests that tumor samples contain widespread increases in chromatin
+          accessibility, especially around regulatory regions linked to cancer-related signaling
+          and immune pathways. RNA-seq validation further supports the relationship between
+          open chromatin and increased gene expression in tumor samples.
+        </p>
+      </section>
+
+      <section class="project-section">
+
+  <h2>TOOLS USED</h2>
+
+  <h3>Workflow & Infrastructure</h3>
+  <div class="tech-tags">
+
+    <span>
+      <a href="https://github.com/fchen-code/Bulk-Sequencing-Pipeline" target="_blank">
+        Bulk Sequencing Pipeline (Nextflow DSL2)
+      </a>
+    </span>
+
+    <span>
+      <a href="https://www.docker.com/" target="_blank">
+        Docker
+      </a>
+    </span>
+
+    <span>
+      <a href="https://slurm.schedmd.com/" target="_blank">
+        SLURM
+      </a>
+    </span>
+
+  </div>
+
+  <h3>Differential Accessibility Analysis</h3>
+  <div class="tech-tags">
+
+    <span>
+      <a href="https://bioconductor.org/packages/release/bioc/html/DiffBind.html" target="_blank">
+        DiffBind
+      </a>
+    </span>
+
+    <span>
+      <a href="https://bioconductor.org/packages/release/bioc/html/DESeq2.html" target="_blank">
+        DESeq2
+      </a>
+    </span>
+
+    <span>
+      <a href="https://github.com/macs3-project/MACS" target="_blank">
+        MACS3
+      </a>
+    </span>
+
+  </div>
+
+  <h3>Annotation & Functional Enrichment</h3>
+  <div class="tech-tags">
+
+    <span>
+      <a href="https://bioconductor.org/packages/release/bioc/html/ChIPseeker.html" target="_blank">
+        ChIPseeker
+      </a>
+    </span>
+
+    <span>
+      <a href="https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html" target="_blank">
+        clusterProfiler
+      </a>
+    </span>
+
+    <span>
+      <a href="https://bioconductor.org/packages/release/bioc/html/fgsea.html" target="_blank">
+        fgsea
+      </a>
+    </span>
+
+    <span>
+      <a href="https://www.gsea-msigdb.org/gsea/index.jsp" target="_blank">
+        GSEA
+      </a>
+    </span>
+
+  </div>
+
+  <h3>Programming & Visualization</h3>
+  <div class="tech-tags">
+
+    <span>
+      <a href="https://www.r-project.org/" target="_blank">
+        R
+      </a>
+    </span>
+
+    <span>
+      <a href="https://www.bioconductor.org/" target="_blank">
+        Bioconductor
+      </a>
+    </span>
+
+    <span>
+      <a href="https://ggplot2.tidyverse.org/" target="_blank">
+        ggplot2
+      </a>
+    </span>
+
+    <span>
+      <a href="https://rmarkdown.rstudio.com/" target="_blank">
+        R Markdown
+      </a>
+    </span>
+
+  </div>
+
+</section>
+
+      <section class="project-section">
+        <h2>R-Markdown</h2>
+
+        <div class="project-links">
+          <a href="https://fchen-code.github.io/atac_rna_tnbc/" class="btn">View Full Analysis</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>
