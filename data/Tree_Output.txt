@@ -1,0 +1,286 @@
+The Pipeline generally output three directories: data, references and results the tree output of each will look like below.
+
+data:
+
+data
+├── fastp
+│   ├── SRR27410792
+│   │   ├── SRR27410792_fastp.html
+│   │   ├── SRR27410792_fastp.json
+│   │   ├── SRR27410792_trimmed_R1.fastq.gz
+│   │   └── SRR27410792_trimmed_R2.fastq.gz
+│   └── SRR453566
+│       ├── SRR453566_fastp.html
+│       ├── SRR453566_fastp.json
+│       ├── SRR453566_trimmed_R1.fastq.gz
+│       └── SRR453566_trimmed_R2.fastq.gz
+└── raw
+    ├── SRR27410792
+    │   ├── SRR27410792_1.fastq.gz
+    │   └── SRR27410792_2.fastq.gz
+    └── SRR453566
+        ├── SRR453566_1.fastq.gz
+        └── SRR453566_2.fastq.gz
+
+7 directories, 12 files
+
+references:
+
+references
+└── saccer3
+    ├── chromsizes
+    │   └── saccer3.chrom.sizes
+    ├── fasta
+    │   ├── Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa.gz
+    │   └── unzipped.fa
+    ├── gtf
+    │   ├── Saccharomyces_cerevisiae.R64-1-1.108.gtf.gz
+    │   └── unzipped.gtf
+    └── indexes
+        ├── STAR
+        │   ├── Genome
+        │   ├── Log.out
+        │   ├── SA
+        │   ├── SAindex
+        │   ├── chrLength.txt
+        │   ├── chrName.txt
+        │   ├── chrNameLength.txt
+        │   ├── chrStart.txt
+        │   ├── exonGeTrInfo.tab
+        │   ├── exonInfo.tab
+        │   ├── geneInfo.tab
+        │   ├── genomeParameters.txt
+        │   ├── sjdbInfo.txt
+        │   ├── sjdbList.fromGTF.out.tab
+        │   ├── sjdbList.out.tab
+        │   └── transcriptInfo.tab
+        └── bowtie2
+            ├── saccer3.1.bt2
+            ├── saccer3.2.bt2
+            ├── saccer3.3.bt2
+            ├── saccer3.4.bt2
+            ├── saccer3.rev.1.bt2
+            └── saccer3.rev.2.bt2
+
+8 directories, 27 files
+
+results:
+
+results
+├── atac
+│   ├── ATAC-Test-Run
+│   │   └── SRR27410792
+│   │       ├── alignment
+│   │       │   ├── SRR27410792.bowtie2.log
+│   │       │   ├── SRR27410792_final_sorted.bam
+│   │       │   ├── SRR27410792_final_sorted.bam.bai
+│   │       │   ├── SRR27410792_sorted_dedup.txt
+│   │       │   ├── filtered.bam
+│   │       │   ├── sorted.bam
+│   │       │   └── sorted_dedup.bam
+│   │       ├── homer
+│   │       │   └── tagdir
+│   │       │       ├── I.tags.tsv
+│   │       │       ├── II.tags.tsv
+│   │       │       ├── III.tags.tsv
+│   │       │       ├── IV.tags.tsv
+│   │       │       ├── IX.tags.tsv
+│   │       │       ├── Mito.tags.tsv
+│   │       │       ├── V.tags.tsv
+│   │       │       ├── VI.tags.tsv
+│   │       │       ├── VII.tags.tsv
+│   │       │       ├── VIII.tags.tsv
+│   │       │       ├── X.tags.tsv
+│   │       │       ├── XI.tags.tsv
+│   │       │       ├── XII.tags.tsv
+│   │       │       ├── XIII.tags.tsv
+│   │       │       ├── XIV.tags.tsv
+│   │       │       ├── XV.tags.tsv
+│   │       │       ├── XVI.tags.tsv
+│   │       │       ├── genomeGCcontent.txt
+│   │       │       ├── tagAutocorrelation.txt
+│   │       │       ├── tagCountDistribution.txt
+│   │       │       ├── tagFreq.txt
+│   │       │       ├── tagFreqUniq.txt
+│   │       │       ├── tagGCcontent.txt
+│   │       │       ├── tagInfo.txt
+│   │       │       └── tagLengthDistribution.txt
+│   │       ├── peaks
+│   │       │   ├── SRR27410792_peaks.narrowPeak
+│   │       │   ├── SRR27410792_peaks.xls
+│   │       │   ├── SRR27410792_summits.bed
+│   │       │   ├── annotation
+│   │       │   │   └── SRR27410792.annotated.txt
+│   │       │   └── tmp_b_c.txt
+│   │       ├── qc
+│   │       │   ├── SRR27410792.flagstat
+│   │       │   ├── SRR27410792.frip.tsv
+│   │       │   ├── SRR27410792.insert_size_histogram.pdf -> /home/fchen3357/nf_work/0f/5e933790a49e64d47e2eb2bbb0647b/SRR27410792.insert_size_histogram.pdf
+│   │       │   ├── SRR27410792.insert_size_metrics.txt -> /home/fchen3357/nf_work/0f/5e933790a49e64d47e2eb2bbb0647b/SRR27410792.insert_size_metrics.txt
+│   │       │   ├── SRR27410792.peak_stats.tsv
+│   │       │   └── SRR27410792.stats
+│   │       └── visualization
+│   │           ├── SRR27410792.bw
+│   │           └── tagdir
+│   │               └── tagdir.ucsc.bedGraph.gz
+│   └── multiqc
+│       ├── alignment
+│       │   ├── multiqc_data
+│       │   │   ├── bowtie2_pe_plot.txt
+│       │   │   ├── llms-full.txt
+│       │   │   ├── multiqc.log
+│       │   │   ├── multiqc.parquet
+│       │   │   ├── multiqc_bowtie2.txt
+│       │   │   ├── multiqc_citations.txt
+│       │   │   ├── multiqc_data.json
+│       │   │   ├── multiqc_general_stats.txt
+│       │   │   ├── multiqc_picard_dups.txt
+│       │   │   ├── multiqc_picard_insertSize.txt
+│       │   │   ├── multiqc_samtools_flagstat.txt
+│       │   │   ├── multiqc_samtools_stats.txt
+│       │   │   ├── multiqc_software_versions.txt
+│       │   │   ├── multiqc_sources.txt
+│       │   │   ├── picard_MarkIlluminaAdapters_histogram.txt
+│       │   │   ├── picard_MeanQualityByCycle_histogram.txt
+│       │   │   ├── picard_MeanQualityByCycle_histogram_1.txt
+│       │   │   ├── picard_QualityScoreDistribution_histogram.txt
+│       │   │   ├── picard_deduplication.txt
+│       │   │   ├── picard_insert_size_Counts.txt
+│       │   │   ├── picard_insert_size_Percentages.txt
+│       │   │   ├── samtools-flagstat-pct-table.txt
+│       │   │   ├── samtools-flagstat-table.txt
+│       │   │   ├── samtools-stats-dp.txt
+│       │   │   └── samtools_alignment_plot.txt
+│       │   └── multiqc_report.html
+│       └── read
+│           ├── multiqc_data
+│           │   ├── fastp-insert-size-plot.txt
+│           │   ├── fastp-seq-content-gc-plot_Read_1_After_filtering.txt
+│           │   ├── fastp-seq-content-gc-plot_Read_1_Before_filtering.txt
+│           │   ├── fastp-seq-content-gc-plot_Read_2_After_filtering.txt
+│           │   ├── fastp-seq-content-gc-plot_Read_2_Before_filtering.txt
+│           │   ├── fastp-seq-content-n-plot_Read_1_After_filtering.txt
+│           │   ├── fastp-seq-content-n-plot_Read_1_Before_filtering.txt
+│           │   ├── fastp-seq-content-n-plot_Read_2_After_filtering.txt
+│           │   ├── fastp-seq-content-n-plot_Read_2_Before_filtering.txt
+│           │   ├── fastp-seq-quality-plot_Read_1_After_filtering.txt
+│           │   ├── fastp-seq-quality-plot_Read_1_Before_filtering.txt
+│           │   ├── fastp-seq-quality-plot_Read_2_After_filtering.txt
+│           │   ├── fastp-seq-quality-plot_Read_2_Before_filtering.txt
+│           │   ├── fastp_filtered_reads_plot.txt
+│           │   ├── fastqc-status-check-heatmap.txt
+│           │   ├── fastqc_adapter_content_plot.txt
+│           │   ├── fastqc_per_base_n_content_plot.txt
+│           │   ├── fastqc_per_base_sequence_quality_plot.txt
+│           │   ├── fastqc_per_sequence_gc_content_plot_Counts.txt
+│           │   ├── fastqc_per_sequence_gc_content_plot_Percentages.txt
+│           │   ├── fastqc_per_sequence_quality_scores_plot.txt
+│           │   ├── fastqc_sequence_counts_plot.txt
+│           │   ├── fastqc_sequence_duplication_levels_plot.txt
+│           │   ├── fastqc_sequence_length_distribution_plot.txt
+│           │   ├── llms-full.txt
+│           │   ├── multiqc.log
+│           │   ├── multiqc.parquet
+│           │   ├── multiqc_citations.txt
+│           │   ├── multiqc_data.json
+│           │   ├── multiqc_fastp.txt
+│           │   ├── multiqc_fastqc.txt
+│           │   ├── multiqc_general_stats.txt
+│           │   ├── multiqc_software_versions.txt
+│           │   └── multiqc_sources.txt
+│           └── multiqc_report.html
+└── rna
+    ├── RNA-Test-Run
+    │   └── SRR453566
+    │       ├── alignment
+    │       │   ├── SRR453566.Aligned.sortedByCoord.out.bam
+    │       │   ├── SRR453566.Aligned.sortedByCoord.out.bam.bai
+    │       │   ├── SRR453566.Log.final.out
+    │       │   ├── SRR453566.Log.out
+    │       │   ├── SRR453566.Log.progress.out
+    │       │   ├── SRR453566.SJ.out.tab
+    │       │   ├── SRR453566_final_sorted.bam
+    │       │   ├── SRR453566_final_sorted.bam.bai
+    │       │   ├── SRR453566_sorted_dedup.txt
+    │       │   ├── filtered.bam
+    │       │   └── sorted_dedup.bam
+    │       ├── qc
+    │       │   ├── SRR453566.flagstat
+    │       │   ├── SRR453566.insert_size_histogram.pdf -> /home/fchen3357/nf_work/14/eff8a139e40fb42296594a50bdce07/SRR453566.insert_size_histogram.pdf
+    │       │   ├── SRR453566.insert_size_metrics.txt -> /home/fchen3357/nf_work/14/eff8a139e40fb42296594a50bdce07/SRR453566.insert_size_metrics.txt
+    │       │   └── SRR453566.stats
+    │       └── quant
+    │           ├── SRR453566_featurecounts.txt
+    │           └── SRR453566_featurecounts.txt.summary
+    └── multiqc
+        ├── alignment
+        │   ├── multiqc_data
+        │   │   ├── llms-full.txt
+        │   │   ├── multiqc.log
+        │   │   ├── multiqc.parquet
+        │   │   ├── multiqc_citations.txt
+        │   │   ├── multiqc_data.json
+        │   │   ├── multiqc_general_stats.txt
+        │   │   ├── multiqc_picard_dups.txt
+        │   │   ├── multiqc_picard_insertSize.txt
+        │   │   ├── multiqc_samtools_flagstat.txt
+        │   │   ├── multiqc_samtools_stats.txt
+        │   │   ├── multiqc_software_versions.txt
+        │   │   ├── multiqc_sources.txt
+        │   │   ├── multiqc_star.txt
+        │   │   ├── picard_MarkIlluminaAdapters_histogram.txt
+        │   │   ├── picard_MeanQualityByCycle_histogram.txt
+        │   │   ├── picard_MeanQualityByCycle_histogram_1.txt
+        │   │   ├── picard_QualityScoreDistribution_histogram.txt
+        │   │   ├── picard_deduplication.txt
+        │   │   ├── picard_insert_size_Counts.txt
+        │   │   ├── picard_insert_size_Percentages.txt
+        │   │   ├── samtools-flagstat-pct-table.txt
+        │   │   ├── samtools-flagstat-table.txt
+        │   │   ├── samtools-stats-dp.txt
+        │   │   ├── samtools_alignment_plot.txt
+        │   │   ├── star_alignment_plot.txt
+        │   │   └── star_summary_table.txt
+        │   └── multiqc_report.html
+        └── read
+            ├── multiqc_data
+            │   ├── fastp-insert-size-plot.txt
+            │   ├── fastp-seq-content-gc-plot_Read_1_After_filtering.txt
+            │   ├── fastp-seq-content-gc-plot_Read_1_Before_filtering.txt
+            │   ├── fastp-seq-content-gc-plot_Read_2_After_filtering.txt
+            │   ├── fastp-seq-content-gc-plot_Read_2_Before_filtering.txt
+            │   ├── fastp-seq-content-n-plot_Read_1_After_filtering.txt
+            │   ├── fastp-seq-content-n-plot_Read_1_Before_filtering.txt
+            │   ├── fastp-seq-content-n-plot_Read_2_After_filtering.txt
+            │   ├── fastp-seq-content-n-plot_Read_2_Before_filtering.txt
+            │   ├── fastp-seq-quality-plot_Read_1_After_filtering.txt
+            │   ├── fastp-seq-quality-plot_Read_1_Before_filtering.txt
+            │   ├── fastp-seq-quality-plot_Read_2_After_filtering.txt
+            │   ├── fastp-seq-quality-plot_Read_2_Before_filtering.txt
+            │   ├── fastp_filtered_reads_plot.txt
+            │   ├── fastqc-status-check-heatmap.txt
+            │   ├── fastqc_adapter_content_plot.txt
+            │   ├── fastqc_per_base_n_content_plot.txt
+            │   ├── fastqc_per_base_sequence_quality_plot.txt
+            │   ├── fastqc_per_sequence_gc_content_plot_Counts.txt
+            │   ├── fastqc_per_sequence_gc_content_plot_Percentages.txt
+            │   ├── fastqc_per_sequence_quality_scores_plot.txt
+            │   ├── fastqc_sequence_counts_plot.txt
+            │   ├── fastqc_sequence_duplication_levels_plot.txt
+            │   ├── fastqc_sequence_length_distribution_plot.txt
+            │   ├── fastqc_top_overrepresented_sequences_table.txt
+            │   ├── llms-full.txt
+            │   ├── multiqc.log
+            │   ├── multiqc.parquet
+            │   ├── multiqc_citations.txt
+            │   ├── multiqc_data.json
+            │   ├── multiqc_fastp.txt
+            │   ├── multiqc_fastqc.txt
+            │   ├── multiqc_general_stats.txt
+            │   ├── multiqc_software_versions.txt
+            │   └── multiqc_sources.txt
+            └── multiqc_report.html
+
+28 directories, 186 files
+
+Those outputs are real reason from the pipeline from real life data from NCBI (SRR453566(RNA), SRR27410792(ATAC)).
