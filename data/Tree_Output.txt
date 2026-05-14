@@ -283,4 +283,4 @@ results
 
 28 directories, 186 files
 
-Those outputs are real reason from the pipeline from real life data from NCBI (SRR453566(RNA), SRR27410792(ATAC)).
+These outputs were generated from real sequencing datasets processed through the pipeline using publicly available NCBI SRA data, including SRR453566 (RNA-seq) and SRR27410792 (ATAC-seq).
