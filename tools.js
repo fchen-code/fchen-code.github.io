@@ -785,7 +785,7 @@ function findRepeat() {
     } else {
         for (let base in locations) {
             output += `<p><strong>Base:</strong> ${base}<br>
-                       <strong>Locations:</strong> ${locations[base].join(", ")}</p>`;
+                       <strong>Position:</strong> ${locations[base].join(", ")}</p>`;
         }
     }
 
