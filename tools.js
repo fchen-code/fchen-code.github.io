@@ -727,3 +727,226 @@ function findKmer() {
 
     k_mer();
 }
+
+function repeat(k, sequence) {
+    const result = [];
+
+    for (let i = 0; i <= sequence.length - k; i++) {
+        result.push(sequence.slice(i, i + k));
+    }
+
+    return result;
+}
+
+function findRepeat() {
+    const sequences = document.getElementById("repeatSequenceInput").value.toUpperCase().replace(/\s/g, "");
+    const ks = parseInt(document.getElementById("repeatLength").value);
+    const resultBox = document.getElementById("repeatResult");
+
+    if (!sequences) {
+        resultBox.innerHTML = "Please enter a sequence.";
+        return;
+    }
+    let sequence = "";
+    const lines = sequences.split("\n")
+    for (let line of lines) {
+        if (line.startsWith(">"))
+            continue
+        sequence += line.replace(/\s/g, "")
+    }
+    if (!ks || ks < 1 || ks > sequence.length) {
+        resultBox.innerHTML = "Please enter a valid repeat length.";
+        return;
+    }
+
+    // Regular repeat finder
+    const custom = repeat(ks, sequence);
+
+    const validRepeat = [...new Set(custom)].filter(base => {
+        return custom.filter(x => x === base).length >= 2;
+    });
+
+    const locations = {};
+
+    for (let base of validRepeat) {
+        locations[base] = [];
+
+        custom.forEach((x, n) => {
+            if (x === base) {
+                locations[base].push(`${n + 1} - ${n + ks}`);
+            }
+        });
+    }
+
+    let output = "<h3>Regular Repeats</h3>";
+
+    if (Object.keys(locations).length === 0) {
+        output += "<p>No regular repeats found.</p>";
+    } else {
+        for (let base in locations) {
+            output += `<p><strong>Base:</strong> ${base}<br>
+                       <strong>Locations:</strong> ${locations[base].join(", ")}</p>`;
+        }
+    }
+
+    const tandemResult = [];
+
+    for (let j = 0; j < sequence.length; j++) {
+        for (let i = 2; i < sequence.length; i++) {
+            let copies = 1;
+            let jump = 1;
+
+            const current = sequence.slice(j, j + i);
+            let nextOne = sequence.slice(j + jump * i, j + (jump + 1) * i);
+
+            if (current === nextOne && current.length === i && nextOne.length === i) {
+                copies = 2;
+
+                while (current === nextOne) {
+                    jump += 1;
+                    nextOne = sequence.slice(j + jump * i, j + (jump + 1) * i);
+
+                    if (current === nextOne) {
+                        copies += 1;
+                    }
+                }
+
+                tandemResult.push({
+                    motif: current,
+                    copies: copies,
+                    start: j + 1,
+                    end: j + current.length * copies,
+                    length: current.length * copies
+                });
+            }
+        }
+    }
+
+    output += "<h3>Tandem Repeats</h3>";
+
+    if (tandemResult.length > 0) {
+        tandemResult.sort((a, b) => a.start - b.start);
+
+        const finalResult = [];
+        let currentBest = tandemResult[0];
+
+        for (let i = 1; i < tandemResult.length; i++) {
+            const b = tandemResult[i];
+
+            if (currentBest.start <= b.end && currentBest.end >= b.start) {
+                if (b.length > currentBest.length) {
+                    currentBest = b;
+                }
+            } else {
+                finalResult.push(currentBest);
+                currentBest = b;
+            }
+        }
+
+        finalResult.push(currentBest);
+
+        for (let item of finalResult) {
+            output += `<p>
+                <strong>Motif:</strong> ${item.motif}<br>
+                <strong>Copies:</strong> ${item.copies}<br>
+                <strong>Start:</strong> ${item.start}<br>
+                <strong>End:</strong> ${item.end}<br>
+                <strong>Length:</strong> ${item.length}
+            </p>`;
+        }
+    } else {
+        output += "<p>No tandem repeats found.</p>";
+    }
+
+    resultBox.innerHTML = output;
+}
+
+
+
+
+function splitSequence(sequence, jump) {
+    const splitList = [];
+
+    for (let i = 0; i <= sequence.length - 3 - jump; i += 3) {
+        splitList.push(sequence.slice(i + jump, i + jump + 3));
+    }
+
+    return splitList;
+}
+
+function checkORF(codons) {
+    const finalOutput = [];
+    const stopCodons = ["TAA", "TAG", "TGA"];
+
+    for (let n = 0; n < codons.length; n++) {
+        if (codons[n] === "ATG") {
+            let output = "ATG";
+
+            for (let j = n + 1; j < codons.length; j++) {
+                if (!stopCodons.includes(codons[j])) {
+                    output += codons[j];
+                } else {
+                    output += codons[j];
+                    finalOutput.push(output);
+                    break;
+                }
+            }
+        }
+    }
+
+    return finalOutput;
+}
+
+
+function findOrf() {
+    const sequences = document.getElementById("orfSequenceInput").value.toUpperCase().replace(/\s/g, "");
+    const resultBox = document.getElementById("orfResult");
+    let output = ""
+    if (!sequences) {
+        resultBox.innerHTML = "Please enter a sequence.";
+        return;
+    }
+    let sequence = "";
+    const lines = sequences.split("\n")
+    for (let line of lines) {
+        if (line.startsWith(">"))
+            continue
+        sequence += line.replace(/\s/g, "")
+    }
+    const orfs = [];
+
+    for (let i = 0; i < 3; i++) {
+        orfs.push(splitSequence(sequence, i));
+}
+
+for (let n = 0; n < orfs.length; n++) {
+
+    const result = checkORF(orfs[n]);
+
+    output += `<div class="orf-frame">`;
+
+    output += `<h3>Frame ${n + 1}</h3>`;
+
+    if (result.length > 0) {
+
+        for (let k = 0; k < result.length; k++) {
+
+            output += `
+            <div class="orf-card">
+                <p><strong>ORF ${k + 1}</strong></p>
+                <p><strong>Sequence:</strong> ${result[k]}</p>
+                <p><strong>Length:</strong> ${result[k].length} bp</p>
+            </div>
+            `;
+        }
+
+    } else {
+
+        output += `<p>No ORFs found.</p>`;
+    }
+
+    output += `</div>`;
+}
+
+resultBox.innerHTML = output;
+}
