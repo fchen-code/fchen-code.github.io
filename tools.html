@@ -277,7 +277,36 @@
 
           <div id="kmerResult" class="result-box"></div>
         </div>
+        <div id="findRepeat" class="tool-panel">
+          <h2>Repeats Finder</h2>
+          <p class="tool-note">
+            Enter a sequence and repeat length to run the Repeat Finder
+          </p>
+          
+          <label for="repeatSequenceInput">Sequence</label>
+          <textarea id="repeatSequenceInput" placeholder="Example: ATGAAATGA"></textarea>
 
+          <label for="repeatLength">Length:</label>
+          <input id="repeatLength" type="number" step="1" value="3" />
+
+          <button class="run-btn" onclick="findRepeat()">Find Repeat</button>
+
+          <div id="repeatResult" class="result-box"></div>
+        </div>
+
+        <div id="findOrf" class="tool-panel">
+          <h2>Find ORF</h2>
+          <p class="tool-note">
+            Enter a sequence to run the ORF Finder
+          </p>
+          
+          <label for="orfSequenceInput">Sequence</label>
+          <textarea id="orfSequenceInput" placeholder="Example: ATGAAATGA"></textarea>
+
+          <button class="run-btn" onclick="findOrf()">Find ORF</button>
+
+          <div id="orfResult" class="result-box"></div>
+        </div>
     </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
   <script src="tools.js"></script>
