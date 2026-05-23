@@ -950,3 +950,302 @@ for (let n = 0; n < orfs.length; n++) {
 
 resultBox.innerHTML = output;
 }
+
+
+function single(seq) {
+    return seq.split("");
+}
+function score(result) {
+    let line = "";
+
+    for (let i = 0; i < result[0].length; i++) {
+        line += result[0][i] === result[1][i] ? "|" : " ";
+    }
+
+    const identical = line.split("|").length - 1;
+    const identityScore = (identical / line.length) * 100;
+
+    return {
+        line: line,
+        identityScore: identityScore
+    };
+}
+
+
+function localAlignment(){
+    const sequences1 = document.getElementById("localSequenceInput1").value.toUpperCase().replace(/\s/g, "");
+    const sequences2 = document.getElementById("localSequenceInput2").value.toUpperCase().replace(/\s/g, "");
+    const resultBox = document.getElementById("localResult");
+    let output = ""
+    if (!sequences1 || !sequences2){
+        resultBox.innerHTML = "Please enter sequences";
+        return;
+    }
+    let sequence1 = "";
+    const lines1 = sequences1.split("\n")
+    for (let line of lines1) {
+        if (line.startsWith(">"))
+            continue
+        sequence1 += line.replace(/\s/g, "")
+    }
+    let sequence2 = "";
+    const lines2 = sequences2.split("\n")
+    for (let line of lines2) {
+        if (line.startsWith(">"))
+            continue
+        sequence2 += line.replace(/\s/g, "")
+    }
+    function createMatrix(seq1, seq2) {
+    const result = [];
+
+    for (let i = 0; i < seq1.length + 1; i++) {
+        const row = [];
+
+        for (let j = 0; j < seq2.length + 1; j++) {
+            row.push(0);
+        }
+
+        result.push(row);
+    }
+
+    return result;
+}
+
+function calculation(seq1, seq2, matrix) {
+    const gap = -2;
+    const mismatch = -1;
+    const match = 2;
+
+    for (let i = 0; i < seq1.length; i++) {
+        for (let j = 0; j < seq2.length; j++) {
+            const diagonal = matrix[i][j];
+            const up = matrix[i][j + 1];
+            const left = matrix[i + 1][j];
+
+            const score = seq1[i] === seq2[j] ? match : mismatch;
+
+            matrix[i + 1][j + 1] = Math.max(
+                diagonal + score,
+                up + gap,
+                left + gap,
+                0
+            );
+        }
+    }
+
+    return matrix;
+}
+
+function highest(calculatedMatrix) {
+    let high = calculatedMatrix[0][0];
+
+    const info = {
+        highest: high,
+        row: 0,
+        column: 0
+    };
+
+    for (let n = 0; n < calculatedMatrix.length; n++) {
+        for (let z = 0; z < calculatedMatrix[n].length; z++) {
+            if (high < calculatedMatrix[n][z]) {
+                high = calculatedMatrix[n][z];
+                info.highest = calculatedMatrix[n][z];
+                info.row = n;
+                info.column = z;
+            }
+        }
+    }
+
+    return info;
+}
+
+function traceback(seq1, seq2, calculatedMatrix, scoreInfo) {
+    let row = scoreInfo.row;
+    let column = scoreInfo.column;
+
+    let resultSeq1 = "";
+    let resultSeq2 = "";
+
+    while (calculatedMatrix[row][column] !== 0) {
+        const diagonal = calculatedMatrix[row - 1][column - 1];
+        const up = calculatedMatrix[row - 1][column];
+        const left = calculatedMatrix[row][column - 1];
+
+        const score = seq1[row - 1] === seq2[column - 1] ? 2 : -1;
+
+        if (calculatedMatrix[row][column] === diagonal + score) {
+            resultSeq1 += seq1[row - 1];
+            resultSeq2 += seq2[column - 1];
+            row -= 1;
+            column -= 1;
+        } else if (calculatedMatrix[row][column] === up - 2) {
+            resultSeq1 += seq1[row - 1];
+            resultSeq2 += "-";
+            row -= 1;
+        } else if (calculatedMatrix[row][column] === left - 2) {
+            resultSeq1 += "-";
+            resultSeq2 += seq2[column - 1];
+            column -= 1;
+        }
+    }
+
+    return [
+        resultSeq1.split("").reverse().join(""),
+        resultSeq2.split("").reverse().join("")
+    ];
+}
+    const s1 = single(sequence1);
+    const s2 = single(sequence2);
+    const filledMatrix = createMatrix(s1, s2);
+    const calculatedMatrix = calculation(s1, s2, filledMatrix);
+    const highestInfo = highest(calculatedMatrix);
+    const finalAlignment = traceback(s1, s2, calculatedMatrix, highestInfo);
+    const finalScore = score(finalAlignment);
+    output += `
+    <p><strong>Alignment Score:</strong> ${calculatedMatrix[calculatedMatrix.length - 1][calculatedMatrix[0].length - 1]}</p>
+    <p><strong>Identity Score:</strong> ${finalScore.identityScore.toFixed(2)}%</p>
+    <pre>
+    <strong>Sequence 1:</strong> ${finalAlignment[0]}
+                ${finalScore.line}
+    <strong>Sequence 2:</strong> ${finalAlignment[1]}
+    </pre>
+    `;
+    resultBox.innerHTML = output;
+}
+
+function globalAlignment(){
+    const sequences1 = document.getElementById("globalSequenceInput1").value.toUpperCase().replace(/\s/g, "");
+    const sequences2 = document.getElementById("globalSequenceInput2").value.toUpperCase().replace(/\s/g, "");
+    const resultBox = document.getElementById("globalResult");
+    let output = ""
+    if (!sequences1 || !sequences2){
+        resultBox.innerHTML = "Please enter sequences";
+        return;
+    }
+    let sequence1 = "";
+    const lines1 = sequences1.split("\n")
+    for (let line of lines1) {
+        if (line.startsWith(">"))
+            continue
+        sequence1 += line.replace(/\s/g, "")
+    }
+    let sequence2 = "";
+    const lines2 = sequences2.split("\n")
+    for (let line of lines2) {
+        if (line.startsWith(">"))
+            continue
+        sequence2 += line.replace(/\s/g, "")
+    }
+    function createMatrix(seq1, seq2, gapPen = -2) {
+    const result = [];
+
+    for (let i = 0; i < seq1.length + 1; i++) {
+        const row = [];
+
+        if (i === 0) {
+            for (let x = 0; x > (seq2.length + 1) * gapPen; x += gapPen) {
+                row.push(x);
+            }
+        } else {
+            for (let j = 0; j < seq2.length + 1; j++) {
+                if (j === 0) {
+                    row.push(i * gapPen);
+                } else {
+                    row.push(0);
+                }
+            }
+        }
+
+        result.push(row);
+    }
+
+    return result;
+}
+
+function calculation(seq1, seq2, matrix) {
+    const gap = -2;
+    const mismatch = -1;
+    const match = 2;
+
+    for (let i = 0; i < seq1.length; i++) {
+        for (let j = 0; j < seq2.length; j++) {
+            const diagonal = matrix[i][j];
+            const up = matrix[i][j + 1];
+            const left = matrix[i + 1][j];
+
+            const score = seq1[i] === seq2[j] ? match : mismatch;
+
+            matrix[i + 1][j + 1] = Math.max(
+                diagonal + score,
+                up + gap,
+                left + gap
+            );
+        }
+    }
+
+    return matrix;
+}
+
+function traceback(seq1, seq2, matrix) {
+    let resultSeq1 = "";
+    let resultSeq2 = "";
+
+    let row = matrix.length - 1;
+    let column = matrix[0].length - 1;
+
+    while (row !== 0 || column !== 0) {
+        const diagonal = matrix[row - 1]?.[column - 1];
+        const up = matrix[row - 1]?.[column];
+        const left = matrix[row]?.[column - 1];
+
+        if (row === 0) {
+            resultSeq1 += "-";
+            resultSeq2 += seq2[column - 1];
+            column -= 1;
+        } else if (column === 0) {
+            resultSeq1 += seq1[row - 1];
+            resultSeq2 += "-";
+            row -= 1;
+        } else {
+            const score = seq1[row - 1] === seq2[column - 1] ? 2 : -1;
+
+            if (matrix[row][column] === diagonal + score) {
+                resultSeq1 += seq1[row - 1];
+                resultSeq2 += seq2[column - 1];
+                row -= 1;
+                column -= 1;
+            } else if (matrix[row][column] === up - 2) {
+                resultSeq1 += seq1[row - 1];
+                resultSeq2 += "-";
+                row -= 1;
+            } else if (matrix[row][column] === left - 2) {
+                resultSeq1 += "-";
+                resultSeq2 += seq2[column - 1];
+                column -= 1;
+            }
+        }
+    }
+
+    return [
+        resultSeq1.split("").reverse().join(""),
+        resultSeq2.split("").reverse().join("")
+    ];
+}
+
+    const s1 = single(sequence1);
+    const s2 = single(sequence2);
+    const filledMatrix = createMatrix(s1, s2);
+    const calculatedMatrix = calculation(s1, s2, filledMatrix);
+    const finalResult = traceback(s1, s2, calculatedMatrix);
+    const finalScore = score(finalResult);
+    output += `
+    <p><strong>Alignment Score:</strong> ${calculatedMatrix[calculatedMatrix.length - 1][calculatedMatrix[0].length - 1]}</p>
+    <p><strong>Identity Score:</strong> ${finalScore.identityScore.toFixed(2)}%</p>
+    <pre>
+    <strong>Sequence 1:</strong> ${finalResult[0]}
+                ${finalScore.line}
+    <strong>Sequence 2:</strong> ${finalResult[1]}
+    </pre>
+    `;
+    resultBox.innerHTML = output;
+}
