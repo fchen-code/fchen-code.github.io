@@ -77,9 +77,9 @@
           <p>Find repeated sequence patterns based on a user-defined repeat length, with automatic detection of tandem repeats</p>
         </button>
 
-        <button class="tool-card disabled">
+        <button class="tool-card" onclick="openTool('localAlignment')">
           <h2>Smith-Waterman Alignment</h2>
-          <p>Not Available Yet</p>
+          <p>Perform local alignment between two input sequences to find the best matching region</p>
         </button>
 
         <button class="tool-card" onclick="openTool('findOrf')">
@@ -87,9 +87,9 @@
           <p>Find potential protein-coding regions by detecting open reading frames (ORFs) across all three reading frames using start and stop codons</p>
         </button>
 
-        <buttom class="tool-card disabled">
+        <buttom class="tool-card" onclick="openTool('globalAlignment')">
           <h2>Needleman-Wunsch Alignment</h2>
-          <p>Not Available Yet</p>
+          <p>Perform global alignment between two input sequences to compare them across their full lengths</p>
         </buttom>
 
         <buttom class="tool-card disabled">
@@ -307,6 +307,42 @@
 
           <div id="orfResult" class="result-box"></div>
         </div>
+        
+        <div id="localAlignment" class="tool-panel">
+          <h2>Smith-Waterman Alignment</h2>
+          <p class="tool-note">
+            Enter two sequences to perform sequence alignment
+          </p>
+          
+          <label for="localSequenceInput1">Sequence 1</label>
+          <textarea id="localSequenceInput1" placeholder="Example: ATGAAATGA"></textarea>
+          
+          <label for="localSequenceInput2">Sequence 2</label>
+          <textarea id="localSequenceInput2" placeholder="Example: ATGAAATGA"></textarea>
+
+          <button class="run-btn" onclick="localAlignment()">Run Aligner</button>
+
+          <div id="localResult" class="result-box"></div>
+        </div>
+
+        <div id="globalAlignment" class="tool-panel">
+          <h2>Needleman-Wunsch Alignment</h2>
+          <p class="tool-note">
+            Enter two sequences to perform sequence alignment
+          </p>
+          
+          <label for="globalSequenceInput1">Sequence 1</label>
+          <textarea id="globalSequenceInput1" placeholder="Example: ATGAAATGA"></textarea>
+          
+          <label for="globalSequenceInput2">Sequence 2</label>
+          <textarea id="globalSequenceInput2" placeholder="Example: ATGAAATGA"></textarea>
+
+          <button class="run-btn" onclick="globalAlignment()">Run Aligner</button>
+
+          <div id="globalResult" class="result-box"></div>
+        </div>
+
+        
     </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
   <script src="tools.js"></script>
