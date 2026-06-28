@@ -1366,33 +1366,32 @@ function dotViewer(){
         }
         
         const layout = {
-  title: {
-    text: "Dot Plot",
-    y: 0.95
-  },
-  margin: {
-    t: 120,
-    l: 50,
-    r: 80,
-    b: 50
-  },
-  xaxis: {
-    title: "Sequence 1",
-    side: "top",
-    range: [-0.5, list1.length - 0.5],
-    showgrid: false
-  },
-  yaxis: {
-    title: "Sequence 2",
-    side: "right",
-    range: [list2.length - 0.5, -0.5],
-    showgrid: false
-  }
-};
+            title: {
+                text: "Dot Plot",
+                y: 0.95
+            },
+            margin: {
+                t: 120,
+                l: 50,
+                r: 80,
+                b: 50
+            },
+            xaxis: {
+                title: "Sequence 1",
+                side: "top",
+                range: [-0.5, list1.length - 0.5],
+                showgrid: false
+            },
+            yaxis: {
+                title: "Sequence 2",
+                side: "right",
+                range: [list2.length - 0.5, -0.5],
+                showgrid: false
+            }
+        };
         Plotly.newPlot("dotplot", traces, layout, {responsive: true});    
     }
 
-// Example
 const list1 = windowSeq(sequence1, window);
 const list2 = windowSeq(sequence2, window);
 const posList = compare(list1, list2);
