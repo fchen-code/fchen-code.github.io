@@ -1277,7 +1277,7 @@ function dotViewer(){
     }
 
     if (window > sequence1.length || window > sequence2.length){
-        resultBox.innerHTML = "Window size cannot be larger than the length of either sequence."
+        resultBox.innerHTML = "Window size cannot be larger than the length of either sequence"
         return;
     }
 
