@@ -785,7 +785,7 @@ function findRepeat() {
     } else {
         for (let base in locations) {
             output += `<p><strong>Base:</strong> ${base}<br>
-                       <strong>Position:</strong> ${locations[base].join(", ")}</p>`;
+                       <strong>Locations:</strong> ${locations[base].join(", ")}</p>`;
         }
     }
 
@@ -952,6 +952,7 @@ resultBox.innerHTML = output;
 }
 
 
+
 function single(seq) {
     return seq.split("");
 }
@@ -971,6 +972,142 @@ function score(result) {
     };
 }
 
+function globalAlignment(){
+    const sequences1 = document.getElementById("globalSequenceInput1").value.toUpperCase().replace(/\s/g, "");
+    const sequences2 = document.getElementById("globalSequenceInput2").value.toUpperCase().replace(/\s/g, "");
+    const resultBox = document.getElementById("globalResult");
+    let output = ""
+    if (!sequences1 || !sequences2){
+        resultBox.innerHTML = "Please enter sequences";
+        return;
+    }
+    let sequence1 = "";
+    const lines1 = sequences1.split("\n")
+    for (let line of lines1) {
+        if (line.startsWith(">"))
+            continue
+        sequence1 += line.replace(/\s/g, "")
+    }
+    let sequence2 = "";
+    const lines2 = sequences2.split("\n")
+    for (let line of lines2) {
+        if (line.startsWith(">"))
+            continue
+        sequence2 += line.replace(/\s/g, "")
+    }
+    function createMatrix(seq1, seq2, gapPen = -2) {
+    const result = [];
+
+    for (let i = 0; i < seq1.length + 1; i++) {
+        const row = [];
+
+        if (i === 0) {
+            for (let x = 0; x > (seq2.length + 1) * gapPen; x += gapPen) {
+                row.push(x);
+            }
+        } else {
+            for (let j = 0; j < seq2.length + 1; j++) {
+                if (j === 0) {
+                    row.push(i * gapPen);
+                } else {
+                    row.push(0);
+                }
+            }
+        }
+
+        result.push(row);
+    }
+
+    return result;
+}
+
+function calculation(seq1, seq2, matrix) {
+    const gap = -2;
+    const mismatch = -1;
+    const match = 2;
+
+    for (let i = 0; i < seq1.length; i++) {
+        for (let j = 0; j < seq2.length; j++) {
+            const diagonal = matrix[i][j];
+            const up = matrix[i][j + 1];
+            const left = matrix[i + 1][j];
+
+            const score = seq1[i] === seq2[j] ? match : mismatch;
+
+            matrix[i + 1][j + 1] = Math.max(
+                diagonal + score,
+                up + gap,
+                left + gap
+            );
+        }
+    }
+
+    return matrix;
+}
+
+function traceback(seq1, seq2, matrix) {
+    let resultSeq1 = "";
+    let resultSeq2 = "";
+
+    let row = matrix.length - 1;
+    let column = matrix[0].length - 1;
+
+    while (row !== 0 || column !== 0) {
+        const diagonal = matrix[row - 1]?.[column - 1];
+        const up = matrix[row - 1]?.[column];
+        const left = matrix[row]?.[column - 1];
+
+        if (row === 0) {
+            resultSeq1 += "-";
+            resultSeq2 += seq2[column - 1];
+            column -= 1;
+        } else if (column === 0) {
+            resultSeq1 += seq1[row - 1];
+            resultSeq2 += "-";
+            row -= 1;
+        } else {
+            const score = seq1[row - 1] === seq2[column - 1] ? 2 : -1;
+
+            if (matrix[row][column] === diagonal + score) {
+                resultSeq1 += seq1[row - 1];
+                resultSeq2 += seq2[column - 1];
+                row -= 1;
+                column -= 1;
+            } else if (matrix[row][column] === up - 2) {
+                resultSeq1 += seq1[row - 1];
+                resultSeq2 += "-";
+                row -= 1;
+            } else if (matrix[row][column] === left - 2) {
+                resultSeq1 += "-";
+                resultSeq2 += seq2[column - 1];
+                column -= 1;
+            }
+        }
+    }
+
+    return [
+        resultSeq1.split("").reverse().join(""),
+        resultSeq2.split("").reverse().join("")
+    ];
+}
+
+    const s1 = single(sequence1);
+    const s2 = single(sequence2);
+    const filledMatrix = createMatrix(s1, s2);
+    const calculatedMatrix = calculation(s1, s2, filledMatrix);
+    const finalResult = traceback(s1, s2, calculatedMatrix);
+    const finalScore = score(finalResult);
+    output += `
+    <p><strong>Alignment Score:</strong> ${calculatedMatrix[calculatedMatrix.length - 1][calculatedMatrix[0].length - 1]}</p>
+    <p><strong>Identity Score:</strong> ${finalScore.identityScore.toFixed(2)}%</p>
+    <pre>
+    <strong>Sequence 1:</strong> ${finalResult[0]}
+                ${finalScore.line}
+    <strong>Sequence 2:</strong> ${finalResult[1]}
+    </pre>
+    `;
+    resultBox.innerHTML = output;
+}
 
 function localAlignment(){
     const sequences1 = document.getElementById("localSequenceInput1").value.toUpperCase().replace(/\s/g, "");
@@ -1113,10 +1250,12 @@ function traceback(seq1, seq2, calculatedMatrix, scoreInfo) {
     resultBox.innerHTML = output;
 }
 
-function globalAlignment(){
-    const sequences1 = document.getElementById("globalSequenceInput1").value.toUpperCase().replace(/\s/g, "");
-    const sequences2 = document.getElementById("globalSequenceInput2").value.toUpperCase().replace(/\s/g, "");
-    const resultBox = document.getElementById("globalResult");
+
+function dotViewer(){
+    const sequences1 = document.getElementById("dotSequenceInput1").value.toUpperCase().replace(/\s/g, "");
+    const sequences2 = document.getElementById("dotSequenceInput2").value.toUpperCase().replace(/\s/g, "");
+    const window = parseInt(document.getElementById("plotWindow").value);
+    const resultBox = document.getElementById("dotResult");
     let output = ""
     if (!sequences1 || !sequences2){
         resultBox.innerHTML = "Please enter sequences";
@@ -1136,116 +1275,127 @@ function globalAlignment(){
             continue
         sequence2 += line.replace(/\s/g, "")
     }
-    function createMatrix(seq1, seq2, gapPen = -2) {
-    const result = [];
 
-    for (let i = 0; i < seq1.length + 1; i++) {
-        const row = [];
+    if (window > sequence1.length || window > sequence2.length){
+        resultBox.innerHTML = "Window size cannot be larger than the length of either sequence."
+        return;
+    }
 
-        if (i === 0) {
-            for (let x = 0; x > (seq2.length + 1) * gapPen; x += gapPen) {
-                row.push(x);
-            }
-        } else {
-            for (let j = 0; j < seq2.length + 1; j++) {
-                if (j === 0) {
-                    row.push(i * gapPen);
-                } else {
-                    row.push(0);
+    function windowSeq(seq, size = 3) {
+        const result = [];
+        for (let i = 0; i <= seq.length - size; i++) {
+            result.push(seq.slice(i, i + size));
+        }
+        return result;
+    }
+
+    function compare(list1, list2) {
+        const poss = [];
+
+        for (let i = 0; i < list1.length; i++) {
+            for (let j = 0; j < list2.length; j++) {
+                if (list1[i] === list2[j]) {
+                    poss.push([i, j]);
                 }
             }
         }
-
-        result.push(row);
+        return poss;
     }
 
-    return result;
-}
+    function plot(posList) {
+        const x = posList.map(p => p[0]);
+        const y = posList.map(p => p[1]);
 
-function calculation(seq1, seq2, matrix) {
-    const gap = -2;
-    const mismatch = -1;
-    const match = 2;
+        const traces = [{
+            x: x,
+            y: y,
+            mode: "markers",
+            type: "scatter",
+            name: "Matches"
+        }];
 
-    for (let i = 0; i < seq1.length; i++) {
-        for (let j = 0; j < seq2.length; j++) {
-            const diagonal = matrix[i][j];
-            const up = matrix[i][j + 1];
-            const left = matrix[i + 1][j];
+        const score = {};
 
-            const score = seq1[i] === seq2[j] ? match : mismatch;
+        for (const point of posList) {
+            const diagonal = point[1] - point[0];
+            if (!score[diagonal]) {
+                score[diagonal] = [];
+            }
 
-            matrix[i + 1][j + 1] = Math.max(
-                diagonal + score,
-                up + gap,
-                left + gap
-            );
+            score[diagonal].push(point);
         }
-    }
 
-    return matrix;
-}
+        for (const group of Object.values(score)) {
+            let coordinates = [];
+            const sortedList = group.sort((a, b) => a[0] - b[0]);
 
-function traceback(seq1, seq2, matrix) {
-    let resultSeq1 = "";
-    let resultSeq2 = "";
+            for (let i = 0; i < sortedList.length - 1; i++) {
+                const current = sortedList[i];
+                const nextOne = sortedList[i + 1];
+                
+                if (current[0] + 1 === nextOne[0] && current[1] + 1 === nextOne[1]) {
+                    if (coordinates.length > 0) {
+                        coordinates.push(nextOne);
+                    } else {
+                        coordinates.push(current);
+                        coordinates.push(nextOne);
+                    }
+                } else {
+                    if (coordinates.length > 0) {
+                        traces.push({
+                            x: coordinates.map(p => p[0]),
+                            y: coordinates.map(p => p[1]),
+                            mode: "lines",
+                            type: "scatter",
+                            showlegend: false
+                        });
+                        coordinates = [];
+                    }
+                }
+            }
 
-    let row = matrix.length - 1;
-    let column = matrix[0].length - 1;
-
-    while (row !== 0 || column !== 0) {
-        const diagonal = matrix[row - 1]?.[column - 1];
-        const up = matrix[row - 1]?.[column];
-        const left = matrix[row]?.[column - 1];
-
-        if (row === 0) {
-            resultSeq1 += "-";
-            resultSeq2 += seq2[column - 1];
-            column -= 1;
-        } else if (column === 0) {
-            resultSeq1 += seq1[row - 1];
-            resultSeq2 += "-";
-            row -= 1;
-        } else {
-            const score = seq1[row - 1] === seq2[column - 1] ? 2 : -1;
-
-            if (matrix[row][column] === diagonal + score) {
-                resultSeq1 += seq1[row - 1];
-                resultSeq2 += seq2[column - 1];
-                row -= 1;
-                column -= 1;
-            } else if (matrix[row][column] === up - 2) {
-                resultSeq1 += seq1[row - 1];
-                resultSeq2 += "-";
-                row -= 1;
-            } else if (matrix[row][column] === left - 2) {
-                resultSeq1 += "-";
-                resultSeq2 += seq2[column - 1];
-                column -= 1;
+            if (coordinates.length > 0) {
+                traces.push({
+                    x: coordinates.map(p => p[0]),
+                    y: coordinates.map(p => p[1]),
+                    mode: "lines",
+                    type: "scatter",
+                    showlegend: false
+                });
             }
         }
+        
+        const layout = {
+  title: {
+    text: "Dot Plot",
+    y: 0.95
+  },
+  margin: {
+    t: 120,
+    l: 50,
+    r: 80,
+    b: 50
+  },
+  xaxis: {
+    title: "Sequence 1",
+    side: "top",
+    range: [-0.5, list1.length - 0.5],
+    showgrid: false
+  },
+  yaxis: {
+    title: "Sequence 2",
+    side: "right",
+    range: [list2.length - 0.5, -0.5],
+    showgrid: false
+  }
+};
+        Plotly.newPlot("dotplot", traces, layout, {responsive: true});    
     }
 
-    return [
-        resultSeq1.split("").reverse().join(""),
-        resultSeq2.split("").reverse().join("")
-    ];
-}
+// Example
+const list1 = windowSeq(sequence1, window);
+const list2 = windowSeq(sequence2, window);
+const posList = compare(list1, list2);
 
-    const s1 = single(sequence1);
-    const s2 = single(sequence2);
-    const filledMatrix = createMatrix(s1, s2);
-    const calculatedMatrix = calculation(s1, s2, filledMatrix);
-    const finalResult = traceback(s1, s2, calculatedMatrix);
-    const finalScore = score(finalResult);
-    output += `
-    <p><strong>Alignment Score:</strong> ${calculatedMatrix[calculatedMatrix.length - 1][calculatedMatrix[0].length - 1]}</p>
-    <p><strong>Identity Score:</strong> ${finalScore.identityScore.toFixed(2)}%</p>
-    <pre>
-    <strong>Sequence 1:</strong> ${finalResult[0]}
-                ${finalScore.line}
-    <strong>Sequence 2:</strong> ${finalResult[1]}
-    </pre>
-    `;
-    resultBox.innerHTML = output;
+plot(posList);
 }
