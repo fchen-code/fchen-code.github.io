@@ -1398,3 +1398,4 @@ const posList = compare(list1, list2);
 
 plot(posList);
 }
+window.dotViewer = dotViewer;
