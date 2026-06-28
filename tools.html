@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MM9ECK6VGQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-MM9ECK6VGQ');
-</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tools | Feng Chen</title>
@@ -64,7 +56,7 @@
 
         <button class="tool-card" onclick="openTool('runBlast')">
           <h2>Mini BLAST</h2>
-          <p>Search DNA sequences against cancer-related genes using k-mer seeding and ungapped alignment</p>
+          <p>Search DNA sequences against cancer-related genes using k-mer seeding and ungapped alignment..</p>
         </button>
 
         <button class="tool-card" onclick="openTool('findKmer')">
@@ -74,7 +66,7 @@
 
         <button class="tool-card" onclick="openTool('findRepeat')">
           <h2>Repeats Finder</h2>
-          <p>Find repeated sequence patterns using a user-defined repeat length with automatic tandem repeat detection</p>
+          <p>Find repeated sequence patterns based on a user-defined repeat length, with automatic detection of tandem repeats</p>
         </button>
 
         <button class="tool-card" onclick="openTool('localAlignment')">
@@ -84,7 +76,7 @@
 
         <button class="tool-card" onclick="openTool('findOrf')">
           <h2>ORF Finder</h2>
-          <p>Find possible protein-coding regions by scanning all three reading frames for start and stop codons</p>
+          <p>Find ORF</p>
         </button>
 
         <buttom class="tool-card" onclick="openTool('globalAlignment')">
@@ -92,9 +84,9 @@
           <p>Perform global alignment between two input sequences to compare them across their full lengths</p>
         </buttom>
 
-        <buttom class="tool-card disabled">
+        <buttom class="tool-card" onclick="openTool('dotViewer')">
           <h2>Sequence Dot Plot Viewer</h2>
-          <p>Not Available Yet</p>
+          <p>Form dot plot with input sequences</p>
         </buttom>
       </section>
     </main>
@@ -264,7 +256,7 @@
         <div id="findKmer" class="tool-panel">
           <h2>K-mer Finder</h2>
           <p class="tool-note">
-            Enter a DNA or RNA sequence to run k-mer finder
+            Enter a sequence and k-mer sizes to run the kmer Finder
           </p>
           
           <label for="kmerSequenceInput">Sequence</label>
@@ -277,10 +269,11 @@
 
           <div id="kmerResult" class="result-box"></div>
         </div>
+
         <div id="findRepeat" class="tool-panel">
           <h2>Repeats Finder</h2>
           <p class="tool-note">
-            Enter a DNA or RNA sequence and repeat length to run the Repeat Finder
+            Enter a sequence and repeat length to run the Repeat Finder
           </p>
           
           <label for="repeatSequenceInput">Sequence</label>
@@ -295,9 +288,9 @@
         </div>
 
         <div id="findOrf" class="tool-panel">
-          <h2>ORF Finder</h2>
+          <h2>Find ORF</h2>
           <p class="tool-note">
-            Enter a DNA or RNA sequence to run the ORF Finder
+            Enter a sequence to run the ORF Finder
           </p>
           
           <label for="orfSequenceInput">Sequence</label>
@@ -307,28 +300,11 @@
 
           <div id="orfResult" class="result-box"></div>
         </div>
-        
-        <div id="localAlignment" class="tool-panel">
-          <h2>Smith-Waterman Alignment</h2>
-          <p class="tool-note">
-            Practice alignment tool using Smith-Waterman with a simple +2/-1/-2 scoring
-          </p>
-          
-          <label for="localSequenceInput1">Sequence 1</label>
-          <textarea id="localSequenceInput1" placeholder="Example: ATGAAATGA"></textarea>
-          
-          <label for="localSequenceInput2">Sequence 2</label>
-          <textarea id="localSequenceInput2" placeholder="Example: ATGAAATGA"></textarea>
-
-          <button class="run-btn" onclick="localAlignment()">Run Aligner</button>
-
-          <div id="localResult" class="result-box"></div>
-        </div>
 
         <div id="globalAlignment" class="tool-panel">
           <h2>Needleman-Wunsch Alignment</h2>
           <p class="tool-note">
-            Practice alignment tool using Needleman-Wunsch with a simple +2/-1/-2 scoring
+            Enter two sequences to perform sequence alignment
           </p>
           
           <label for="globalSequenceInput1">Sequence 1</label>
@@ -342,9 +318,46 @@
           <div id="globalResult" class="result-box"></div>
         </div>
 
-        
+
+        <div id="localAlignment" class="tool-panel">
+          <h2>Smith-Waterman Alignment</h2>
+          <p class="tool-note">
+            Enter two sequences to perform sequence alignment
+          </p>
+          
+          <label for="localSequenceInput1">Sequence 1</label>
+          <textarea id="localSequenceInput1" placeholder="Example: ATGAAATGA"></textarea>
+          
+          <label for="localSequenceInput2">Sequence 2</label>
+          <textarea id="localSequenceInput2" placeholder="Example: ATGAAATGA"></textarea>
+
+          <button class="run-btn" onclick="localAlignment()">Run Aligner</button>
+
+          <div id="localResult" class="result-box"></div>
+        </div>
+
+        <div id="dotViewer" class="tool-panel">
+          <h2>Dot Viewer</h2>
+          <p class="tool-note">
+            Enter two sequences to view dot plot
+          </p>
+          
+          <label for="dotSequenceInput1">Sequence 1</label>
+          <textarea id="dotSequenceInput1" placeholder="Example: ATGAAATGA"></textarea>
+          
+          <label for="dotSequenceInput2">Sequence 2</label>
+          <textarea id="dotSequenceInput2" placeholder="Example: ATGAAATGA"></textarea>
+
+          <label for="plotWindow">Window size:</label>
+          <input id="plotWindow" type="number" step="1" value="3" />
+          <button class="run-btn" onclick="dotViewer()">Run</button>
+
+          <div id="dotResult" class="result-box"></div>
+          <div id="dotplot"></div>
+        </div>
     </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <script src="tools.js"></script>
 </body>
 </html>
